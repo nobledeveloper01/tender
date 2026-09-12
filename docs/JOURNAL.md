@@ -305,3 +305,13 @@ had turned them off; `@AppStorage` had simply never been read by anything.
 The announcer held a `var` the sheet never reached. Now `Preferences` reads
 the stored value at the moment of speaking or pulsing, absent means on, and
 a test sets both false and watches both channels refuse.
+
+## 2026-09-12 — ₦1,000
+
+The learn screen's last row read *₦1,000*. `Text("\(someInt)")` runs the
+integer through a locale formatter; the other seven values are too short to
+show it, so the one four-digit value got a comma the size of a speck, on a
+screen designed for a reader who squints. Plain `String(int)` now, on the
+learn screen and on the camera screen's numeral, where it would have
+mattered more. A UI test asserts *₦1000*. Fourth defect today caught by a
+screenshot and no test.
