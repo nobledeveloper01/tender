@@ -61,6 +61,7 @@ Foundation, and tests in seconds with no simulator. `make coverage-gate` holds i
 <p align="center">
   <img src="docs/screenshots/05-largest-text.png" width="230" alt="The answer at the largest accessibility text size: the sentence wraps to three lines and fills the width, nothing clipped" />
   <img src="docs/screenshots/06-camera-refused.png" width="230" alt="The camera refused: one sentence, one 64-point button that opens Settings, spoken the moment it appears" />
+  <img src="docs/screenshots/07-learn.png" width="230" alt="Learn the patterns: eight values, each with its haptic pattern in words and as a glyph; tapping one says it and pulses it" />
 </p>
 
 **Nothing requires sight, and the simulator can prove part of that.** Every screen passes
@@ -68,6 +69,8 @@ Xcode's accessibility audit — every check but contrast, which the audit cannot
 gradient and `ContrastTests` measures at 7:1 instead — at the default text size and at the
 largest. The splash sweeps with Reduce Motion on because a timer ends it, not an animation.
 A refused camera is one sentence and one button, never dressed as *"I can't see a note"*.
+And the haptic vocabulary has a place to be learned — Settings → *Learn the patterns* —
+which says each value and pulses it through the same channels a real answer uses.
 
 ## The eleven notes
 
