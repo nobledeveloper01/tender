@@ -17,8 +17,8 @@ final class Reader {
 
     private let source: FrameSource
     private let classifier: NoteClassifier
-    private let announcer: Announcer
-    private let haptics: Haptics
+    private let announcer: Speaking
+    private let haptics: Pulsing
     private var task: Task<Void, Never>?
     private var classifying = false
     private var lastFramingSaid: (Framing, ContinuousClock.Instant)?
@@ -26,11 +26,14 @@ final class Reader {
 
     /// How long a classification may take before it is abandoned.
     static let budget: Duration = .milliseconds(1500)
+    private let budget: Duration
 
     /// The live session, for the dimmed preview. Nil for fixtures and the simulator.
     var captureSession: AVCaptureSession? { (source as? CameraSession)?.captureSession }
 
-    init(source: FrameSource, classifier: NoteClassifier, announcer: Announcer, haptics: Haptics) {
+    init(source: FrameSource, classifier: NoteClassifier, announcer: Speaking, haptics: Pulsing,
+         budget: Duration = Reader.budget) {
+        self.budget = budget
         self.source = source
         self.classifier = classifier
         self.announcer = announcer
@@ -82,7 +85,7 @@ final class Reader {
         guard judged == .ready, !classifying, verdict == nil else { return }
         classifying = true
         defer { classifying = false }
-        let distribution = await withTimeout(Self.budget) { [classifier] in
+        let distribution = await withTimeout(budget) { [classifier] in
             await classifier.classify(frame)
         }
         let decided = ConfidenceRule.decide(distribution ?? [:])

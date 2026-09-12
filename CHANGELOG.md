@@ -45,6 +45,10 @@ Entries say *why*, not just what.
   text size without a clipped word on either screen, the splash sweeping with
   Reduce Motion on, a tap that repeats and changes nothing.
 - The App Store text, in `docs/APPSTORE.md`, read by `copy-check`.
+- The reader's rules tested directly — speak once, classify once, throttle
+  the same framing to once a second, abandon a slow classifier and never speak
+  its late answer — through injectable output channels and spies, with two
+  mutations proving the tests can fail.
 - Screenshots in the README, taken on the simulator from fixture photographs
   and captioned as such; `make screenshot` to retake, and `doc-check` warns
   when they fall behind the app.

@@ -194,3 +194,19 @@ tried better light, a flatter hand, a different note, and never the one thing
 that would help. The FRD had the requirement from the start; the code did
 not, and nothing on the simulator would ever have shown it, because the
 simulator has no camera to refuse.
+
+## 2026-09-12 — The wiring, heard and felt
+
+`Reader` — the thing that turns frames into sentences — had no unit tests.
+Its budget, its once-per-second throttle and its speak-once rule were only
+exercised through UI tests, which cannot hear what was said. The two output
+channels are protocols now, `Speaking` and `Pulsing`, and four tests drive
+the reader with scripted frames and a scripted classifier and read back what
+the spies heard: ten white frames say *"I can't see a note"* once; twenty
+ready frames classify once and speak once and pulse the right pattern; a
+classifier that takes five seconds is abandoned and the answer is *not sure*
+and the late answer is never spoken; start over forgets and repeat repeats.
+
+All four passed first time, which is when to check they can fail. Two
+mutations — the throttle removed, the budget made infinite — each failed
+exactly the test that guards it and no other.

@@ -5,8 +5,14 @@
 import CoreHaptics
 import TenderDomain
 
+/// Something that plays pulses. The app's is `Haptics`; a test's records them.
 @MainActor
-final class Haptics {
+protocol Pulsing: AnyObject {
+    func play(_ pulses: [Pulse], intensity: Double)
+}
+
+@MainActor
+final class Haptics: Pulsing {
     private var engine: CHHapticEngine?
     var enabled = true
 

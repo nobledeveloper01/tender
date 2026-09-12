@@ -5,8 +5,14 @@
 import AVFoundation
 import UIKit
 
+/// Something that says sentences. The app's is `Announcer`; a test's records them.
 @MainActor
-final class Announcer {
+protocol Speaking: AnyObject {
+    func say(_ text: String)
+}
+
+@MainActor
+final class Announcer: Speaking {
     private let synthesiser = AVSpeechSynthesizer()
     var speakWhenVoiceOverOff = true
 
