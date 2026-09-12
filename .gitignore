@@ -15,6 +15,8 @@ docs/*
 !docs/APPSTORE.md
 # Everything the app says, derived from the source. What a speaker is handed in v1.1.
 !docs/SPEECH.md
+# What a speaker is handed: twelve lines per language, and the way back.
+!docs/RECORDING-KIT.md
 
 # The dataset is photographs of banknotes and lives beside the repo, not in
 # it. `make dataset-check` reads it from DATASET, which defaults to ../tender-dataset.

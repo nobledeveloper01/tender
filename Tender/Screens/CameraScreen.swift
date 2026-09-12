@@ -188,6 +188,7 @@ struct SettingsSheet: View {
     @AppStorage(Preferences.rateKey) private var speechRate = 0.5
     @AppStorage(Preferences.hideNumberKey) private var hideNumber = false
     @AppStorage(Preferences.dimKey) private var dim = false
+    @AppStorage(Preferences.languageKey) private var language = "en"
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var scheme
 
@@ -217,6 +218,7 @@ struct SettingsSheet: View {
                                 Choice(label: Strings.rateNormal, value: 0.5),
                                 Choice(label: Strings.rateFast, value: 0.6),
                             ], selection: $speechRate)
+                            LanguageRow(selection: $language)
                         }
                         .font(Type.bodyFont()).tint(palette.ready).navigationTitle(Strings.speechGroup)
                     }

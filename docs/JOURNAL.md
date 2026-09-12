@@ -345,3 +345,33 @@ unscalable. Audit before scrolling, not after.
 
 **The picker's value text does not follow Dynamic Type**, in either style.
 An owned row of plain text does.
+
+## 2026-09-12 — The twentieth: the denomination in your own language
+
+Harvest's pattern, whole: sixty bundled clips — twelve lines in each of
+Naijá, Hausa, Yorùbá, Igbo and Fulfulde — every one a placeholder today that
+says, in English, that it is a placeholder and which language belongs there.
+`make audio-check` counts them from the domain's enum; `make recording-kit`
+prints the twelve lines a speaker is handed; `make recording-import` brings
+the takes back in the bundled format and strikes them off. Proved round
+trip: twelve synthetic takes in, sixty placeholders became forty-eight, a
+second import refused to overwrite without `FORCE`, a stray file was skipped
+and named, and everything restored byte for byte.
+
+### What surprised us
+
+**The app can refuse to offer what it does not have.** Harvest carries its
+placeholders as a release gate. Tender's language list reads the same
+`placeholders.txt` the gate counts and offers only languages with none in
+it — English alone today. A user cannot choose Hausa and hear English. So
+the twentieth feature added no release gate: the day Hausa's twelve clips
+come back, Hausa appears, and until then it is a count, not a promise.
+
+**Xcode flattens a synchronized folder's resources into the bundle root**,
+so five `n500.m4a` collided. Every clip is `<lang>-<stem>.m4a`, unique
+there, and in a per-language folder in the tree for the people who record
+them.
+
+**The coverage gate pointed at four files** and every gap was a real one —
+six language names nobody had asserted, the million and the minus in
+numbers-as-words, an agreement edge, the ordering of values. 99.2% now.

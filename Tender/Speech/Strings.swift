@@ -36,6 +36,8 @@ enum Strings {
     static let firstLaunchHint = "Point the camera at a note. Tap anywhere to hear it again."
     static let sounds = "Sounds"
     static let speechGroup = "Speech"
+    static let language = "Language"
+    static let languageHint = "The denomination is said in this language, from a recording. Everything else stays in English."
     static let feelGroup = "Haptics and sounds"
     static let screenGroup = "Screen"
     static let hapticStrength = "Haptic strength"

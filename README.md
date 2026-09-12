@@ -72,6 +72,16 @@ A refused camera is one sentence and one button, never dressed as *"I can't see 
 And the haptic vocabulary has a place to be learned — Settings → *Learn the patterns* —
 which says each value and pulses it through the same channels a real answer uses.
 
+**Twenty more things, each checked against the product's rules before it was built** —
+[ADR-0004](docs/adr/0004-twenty-things-and-the-rule-they-passed.md). A sure answer needs
+two frames that agree. The torch comes on in the dark. *"Closer."* A tally, and a change
+checker for the conductor problem. *How sure?* A quiz. Hide the number; dim the screen.
+Siri and the Action button. And the denomination in Naijá, Hausa, Yorùbá, Igbo or
+Fulfulde from a bundled recording — **sixty clips, all placeholders today**, each saying
+in English that it is a placeholder, and the app refuses to offer a language with a
+placeholder in it. [`docs/RECORDING-KIT.md`](docs/RECORDING-KIT.md) is what a speaker is
+handed: twelve lines.
+
 ## The eleven notes
 
 Eight values. Three of them — ₦200, ₦500 and ₦1000 — were redesigned in 2022 and both

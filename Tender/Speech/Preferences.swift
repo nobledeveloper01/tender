@@ -3,6 +3,7 @@
 // moment of speaking or pulsing, so a change takes effect on the next
 // sentence. Absent means on: the app speaks and pulses until told not to.
 import Foundation
+import TenderDomain
 
 enum Preferences {
     static let speechKey = "speech.enabled"
@@ -13,6 +14,11 @@ enum Preferences {
     static let hideNumberKey = "screen.hideNumber"
     static let dimKey = "screen.dim"
     static let hintGivenKey = "hint.given"
+    static let languageKey = "language"
+
+    static func language(_ d: UserDefaults = .standard) -> Language {
+        Language(rawValue: d.string(forKey: languageKey) ?? "") ?? .en
+    }
 
     static func soundsEnabled(_ d: UserDefaults = .standard) -> Bool {
         d.object(forKey: soundsKey) == nil ? false : d.bool(forKey: soundsKey)   // off until asked for

@@ -109,7 +109,7 @@ final class Reader {
     /// would. The original design's sentence, so no "new design" suffix.
     func demonstrate(_ value: Naira) {
         let note = Note.allCases.first { $0.value == value && $0.design == .original }!
-        announcer.say(Announcement.text(for: .sure(note)))
+        announcer.say(.sure(note), text: Announcement.text(for: .sure(note)))
         haptics.play(HapticPattern.pulses(for: value), intensity: 1.0)
     }
 
@@ -204,7 +204,7 @@ final class Reader {
         let text = Announcement.text(for: verdict)
         if text != lastSaid {
             lastSaid = text
-            announcer.say(text)
+            announcer.say(verdict, text: text)
             let h = HapticPattern.render(verdict)
             haptics.play(h.pulses, intensity: h.intensity)
         }
@@ -225,7 +225,11 @@ final class Reader {
             }
         }
         lastSaid = text
-        announcer.say(text)
+        if mode == .identify {
+            announcer.say(decided, text: text)
+        } else {
+            announcer.say(text)   // the tally's running total has no clip; English carries it
+        }
         haptics.play(h.pulses, intensity: h.intensity)
         // In a tally or a change check the next note should be read without
         // a gesture, so the answer does not stick.

@@ -140,3 +140,68 @@ struct MoneyArithmeticTests {
         #expect(SpokenNumber.words(20000) == "twenty thousand")
     }
 }
+
+@Suite("Languages and clips")
+struct LanguageTests {
+    @Test("Six languages, five recorded, twelve stems")
+    func counts() {
+        #expect(Language.allCases.count == 6)
+        #expect(Language.recorded.count == 5)
+        #expect(!Language.recorded.contains(.en))
+        #expect(ClipStem.allCases.count == 12)
+    }
+
+    @Test("Every value has a stem, and the script follows the English sentence shape")
+    func script() {
+        for v in Naira.allCases { #expect(ClipStem(rawValue: "n\(v.rawValue)") != nil) }
+        #expect(ClipScript.stems(for: .sure(.n500)) == [.n500])
+        #expect(ClipScript.stems(for: .sure(.n500new)) == [.n500, .newDesign])
+        #expect(ClipScript.stems(for: .probably(.n1000new)) == [.iThink, .n1000, .newDesign, .check])
+        #expect(ClipScript.stems(for: .notSure) == [.notSure])
+    }
+
+    @Test("Nothing a speaker is asked to record implies authenticity")
+    func honest() {
+        for s in ClipStem.allCases {
+            let e = s.english.lowercased()
+            for w in ["genuine", "real", "fake", "counterfeit", "authentic", "verified"] { #expect(!e.contains(w)) }
+        }
+    }
+}
+
+@Suite("The edges the coverage gate pointed at")
+struct EdgeTests {
+    @Test("Every language has a name in its own language")
+    func languageNames() {
+        #expect(Language.en.name == "English")
+        #expect(Language.pcm.name == "Naijá")
+        #expect(Language.ha.name == "Hausa")
+        #expect(Language.yo.name == "Yorùbá")
+        #expect(Language.ig.name == "Igbo")
+        #expect(Language.ff.name == "Fulfulde")
+        #expect(Set(Language.allCases.map(\.name)).count == 6)
+    }
+
+    @Test("Numbers as words at the far ends")
+    func farEnds() {
+        #expect(SpokenNumber.words(-5) == "minus five")
+        #expect(SpokenNumber.words(1_000_000) == "one million")
+        #expect(SpokenNumber.words(2_500_000) == "two million five hundred thousand")
+        #expect("".capitalisedFirst == "")
+    }
+
+    @Test("Agreement: a 'probably' after a 'sure' of a different value is passed through")
+    func agreementEdge() {
+        var a = Agreement()
+        _ = a.consider(.sure(.n5))
+        #expect(a.consider(.probably(.n10)) == .probably(.n10))
+        a.reset()
+        #expect(a.consider(.sure(.n5)) == .probably(.n5), "after a reset, sure once is probably again")
+    }
+
+    @Test("Naira compares by value")
+    func ordering() {
+        #expect(Naira.n5 < Naira.n1000)
+        #expect(Naira.allCases == Naira.allCases.sorted())
+    }
+}

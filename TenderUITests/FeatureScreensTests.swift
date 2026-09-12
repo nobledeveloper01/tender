@@ -51,7 +51,7 @@ final class FeatureScreensTests: XCTestCase {
             app.swipeDown(); app.swipeDown()
             try audit(app, "settings \(size)")
             // Each group screen, and back.
-            for (group, rows) in [("Speech", ["Speak when VoiceOver is off", "Speech rate"]),
+            for (group, rows) in [("Speech", ["Speak when VoiceOver is off", "Speech rate", "Language"]),
                                   ("Haptics and sounds", ["Haptics", "Haptic strength", "Sounds"]),
                                   ("Screen", ["Hide the number", "Dim the screen"])] {
                 XCTAssertTrue(scrolledTo(group, in: app))
@@ -111,5 +111,41 @@ final class FeatureScreensTests: XCTestCase {
         let toggle = app.switches["Hide the number"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 3))
         XCTAssertEqual(toggle.value as? String, "1", "the launch argument set the preference and the toggle shows it")
+    }
+
+    /// The language list: six, each named in its own language, and choosing
+    /// one is remembered.
+    @MainActor
+    func testTheLanguageListNamesSixAndRemembersTheChoice() throws {
+        // -allLanguages: without it the list is English alone, because every
+        // clip is a placeholder today, and that is asserted in ClipTests.
+        let app = launch(["-fixture", "blank", "-allLanguages"])
+        app.buttons["Settings"].tap()
+        XCTAssertTrue(scrolledTo("Speech", in: app))
+        app.descendants(matching: .any)["Speech"].firstMatch.tap()
+        XCTAssertTrue(scrolledTo("Language", in: app))
+        app.descendants(matching: .any)["Language"].firstMatch.tap()
+        for name in ["English", "Naijá", "Hausa", "Yorùbá", "Igbo", "Fulfulde"] {
+            XCTAssertTrue(scrolledTo(name, in: app), name)
+        }
+        try audit(app, "language")
+        app.buttons["Hausa"].firstMatch.tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.descendants(matching: .any)["Language, Hausa"].firstMatch.waitForExistence(timeout: 3))
+        // Back to English, so the next test does not inherit it.
+        app.descendants(matching: .any)["Language, Hausa"].firstMatch.tap()
+        app.buttons["English"].firstMatch.tap()
+    }
+
+    @MainActor
+    func testWithoutRecordingsTheLanguageListIsEnglishAlone() {
+        let app = launch(["-fixture", "blank"])
+        app.buttons["Settings"].tap()
+        XCTAssertTrue(scrolledTo("Speech", in: app))
+        app.descendants(matching: .any)["Speech"].firstMatch.tap()
+        XCTAssertTrue(scrolledTo("Language", in: app))
+        app.descendants(matching: .any)["Language"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["English"].firstMatch.waitForExistence(timeout: 3))
+        XCTAssertFalse(app.buttons["Hausa"].exists, "Hausa is all placeholders and must not be offered")
     }
 }

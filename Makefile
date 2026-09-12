@@ -30,10 +30,10 @@ help: ## Show this help
 # --- the gate ---------------------------------------------------------------
 
 .PHONY: ci
-ci: doc-check design-check counts-check copy-check network-check splash-check speech-check dataset-check model-check analyze test coverage-gate ## Everything CI runs
+ci: doc-check design-check counts-check copy-check network-check splash-check speech-check audio-check dataset-check model-check analyze test coverage-gate ## Everything CI runs
 
 .PHONY: gates
-gates: doc-check design-check counts-check copy-check network-check splash-check speech-check coverage-gate ## The blocking gates alone. These never go yellow.
+gates: doc-check design-check counts-check copy-check network-check splash-check speech-check audio-check coverage-gate ## The blocking gates alone. These never go yellow.
 
 # --- the dataset: Phase 1 ---------------------------------------------------
 #
@@ -85,6 +85,23 @@ speech-check: ## Fail if docs/SPEECH.md is not what the source produces
 .PHONY: speech-list
 speech-list: ## Write docs/SPEECH.md — everything the app says, derived from the source
 	@python3 scripts/speech-list.py
+
+.PHONY: audio-check
+audio-check: ## Fail if a language is missing a clip; count the placeholders
+	@python3 scripts/audio-check.py
+
+.PHONY: placeholders
+placeholders: ## Write a stand-in clip for every recording not yet made (macOS)
+	@python3 scripts/make-placeholders.py
+
+.PHONY: recording-kit
+recording-kit: ## Print the twelve lines a speaker records:  make recording-kit L=ha
+	@python3 scripts/recording-kit.py $(or $(L),ha)
+
+.PHONY: recording-import
+recording-import: ## Bring recordings in:  make recording-import L=ha D=<dir> [FORCE=1]
+	@if [ -z "$(D)" ]; then echo "\033[0;33m!\033[0m usage:  make recording-import L=ha D=<dir>"; exit 64; fi
+	@python3 scripts/recording-kit.py $(or $(L),ha) --import "$(D)" $(if $(FORCE),--force,)
 
 .PHONY: brandmark
 # Not run by `ci`, which checks rather than writes. `splash-check` fails if

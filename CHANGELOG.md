@@ -10,6 +10,12 @@ Entries say *why*, not just what.
 
 ### Added
 
+- **The twentieth: the denomination in Naijá, Hausa, Yorùbá, Igbo or
+  Fulfulde**, from bundled recordings — sixty clips, all placeholders that
+  announce themselves, counted by `make audio-check` from the domain's enum.
+  The language list offers only languages with no placeholder in them, so
+  the feature cannot ship half-made. `make recording-kit` and
+  `make recording-import`; [`docs/RECORDING-KIT.md`](docs/RECORDING-KIT.md).
 - **Nineteen of twenty features**, each checked against the product's five
   rules before it was built — [ADR-0004](docs/adr/0004-twenty-things-and-the-rule-they-passed.md),
   and the table in [`docs/FEATURE-BACKLOG.md`](docs/FEATURE-BACKLOG.md).

@@ -4,7 +4,7 @@
 
 Twenty features, each checked against the five rules before it was built:
 nothing requires sight, nothing stored or sent, never authenticity, never money
-movement, native for a reason. Nineteen are in; the twentieth is below.
+movement, native for a reason. All twenty are in.
 
 | | Serves | Where |
 |---|---|---|
@@ -27,6 +27,7 @@ movement, native for a reason. Nineteen are in; the twentieth is below.
 | Low Power Mode | Fifteen frames a second, a longer day | `CameraSession` |
 | Siri, Shortcuts, the Action button | *"Identify a note with Tender"* | `IdentifyNoteIntent` |
 | *"What Tender knows about you"* | The privacy promise, out loud | Settings |
+| **The denomination in your own language** | Naijá, Hausa, Yorùbá, Igbo, Fulfulde, from bundled recordings; twelve lines per language; a language is offered only when none of its clips is a placeholder | Settings → Speech → Language; [`RECORDING-KIT.md`](RECORDING-KIT.md) |
 
 ## Not yet
 
@@ -36,7 +37,6 @@ into a graveyard.
 
 | | Why not now |
 |---|---|
-| **The denomination in Hausa, Yoruba, Igbo, Pidgin and Fulfulde, from a bundled recording** — the twentieth | Next. VoiceOver speaks English and a blind Nigerian iPhone user already lives in that; the eleven words are the first thing to record when the Harvest recording kit is pointed at this project. It arrives with the same gate Harvest has for it — a placeholder that announces itself until a native speaker replaces it. |
 | A stack of notes, counted | v1.1. Several notes at once is a detection problem before it is a classification one, and the classifier is not trained yet. Also arithmetic on cash needs its own sentence about not being fintech. |
 | The Action button | v1.1. Launch-to-camera is already the default, so the button saves one unlock. Worth having; not worth having before the camera works on a handset. |
 | CFA francs, for the border markets | Not scheduled. A second currency doubles the dataset and the classes and the failure modes, and nobody has asked. It goes in when somebody who crosses that border does. |
