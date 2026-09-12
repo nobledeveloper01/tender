@@ -124,8 +124,10 @@ struct SettingsSheet: View {
     @Binding var speechEnabled: Bool
     @Binding var hapticsEnabled: Bool
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
+        let palette = Palette.current(scheme)
         NavigationStack {
             // Three rows, each 64 pt. Done is a row rather than a toolbar item
             // because toolbar items are sized by the bar, which caps them at
@@ -137,8 +139,10 @@ struct SettingsSheet: View {
                     .frame(minHeight: Target.standard)
                 Button(Strings.done) { dismiss() }
                     .frame(maxWidth: .infinity, minHeight: Target.standard)
+                    .fontWeight(.semibold)
             }
             .font(Type.bodyFont())
+            .tint(palette.ready)   // the palette's action colour, not the system blue
             .navigationTitle(Strings.settings)
         }
     }
