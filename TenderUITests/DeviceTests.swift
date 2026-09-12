@@ -17,7 +17,7 @@ final class DeviceTests: XCTestCase {
         throw XCTSkip("no camera on a simulator — R2 needs a handset")
         #else
         let app = XCUIApplication()
-        app.launch()
+        app.launch()   // not silent: the person holding the note should hear the phone
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
         XCTAssertTrue(camera.waitForExistence(timeout: 8), "the camera screen never appeared; was the permission granted?")
         return app

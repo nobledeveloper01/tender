@@ -71,6 +71,10 @@ Entries say *why*, not just what.
 
 ### Changed
 
+- The tests run on a simulator named "Tender Tests" when one exists, silently,
+  and shut it down afterwards — so they never drive the device a person is
+  watching, and a headless simulator never talks through the speakers.
+
 - **Phase 0 cleared; `PHASE` is 1.**
 - The settings sheet is tinted with the palette's `ready`, not the system
   blue — caught by eye, not by any test.

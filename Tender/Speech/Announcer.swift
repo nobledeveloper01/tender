@@ -14,7 +14,12 @@ protocol Speaking: AnyObject {
 @MainActor
 final class Announcer: Speaking {
     private let synthesiser = AVSpeechSynthesizer()
-    var speakWhenVoiceOverOff = true
+    /// `-silent` on the command line keeps the synthesiser quiet: the UI
+    /// tests launch the app dozens of times on a headless simulator whose
+    /// audio still comes out of the Mac's speakers, and a test reads what
+    /// was said through a spy, never through a speaker. VoiceOver
+    /// announcements are unaffected — VoiceOver is not running in a test.
+    var speakWhenVoiceOverOff = !CommandLine.arguments.contains("-silent")
 
     func say(_ text: String) {
         if UIAccessibility.isVoiceOverRunning {

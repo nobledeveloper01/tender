@@ -9,7 +9,7 @@ final class PipelineTests: XCTestCase {
     @MainActor
     private func launch(fixture: String) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-fixture", fixture]
+        app.launchArguments = ["-fixture", fixture, "-silent"]
         app.launch()
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
         XCTAssertTrue(camera.waitForExistence(timeout: 5))

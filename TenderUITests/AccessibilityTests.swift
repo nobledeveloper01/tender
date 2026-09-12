@@ -8,6 +8,7 @@ final class AccessibilityTests: XCTestCase {
     @MainActor
     func testTheCameraScreenPassesTheAccessibilityAudit() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-silent"]
         app.launch()
         // Past the splash.
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
@@ -35,6 +36,7 @@ final class AccessibilityTests: XCTestCase {
     @MainActor
     func testTheSimulatorSaysItCannotSeeANote() {
         let app = XCUIApplication()
+        app.launchArguments = ["-silent"]
         app.launch()
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
         XCTAssertTrue(camera.waitForExistence(timeout: 5))

@@ -12,7 +12,7 @@ final class Phase4Tests: XCTestCase {
     @MainActor
     private func launch(_ extra: [String]) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = extra
+        app.launchArguments = extra + ["-silent"]
         app.launch()
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
         XCTAssertTrue(camera.waitForExistence(timeout: 5), "the camera screen never appeared")
@@ -69,7 +69,7 @@ final class Phase4Tests: XCTestCase {
     @MainActor
     func testTheSplashSweepsWithReduceMotion() {
         let app = XCUIApplication()
-        app.launchArguments = ["-reduceMotion"]
+        app.launchArguments = ["-reduceMotion", "-silent"]
         app.launch()
         let camera = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Camera.'")).firstMatch
         XCTAssertTrue(camera.waitForExistence(timeout: 5), "the splash never swept with Reduce Motion on")

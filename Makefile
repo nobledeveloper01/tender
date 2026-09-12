@@ -138,7 +138,10 @@ test-domain: ## The domain package's tests, on macOS, in seconds
 test-app: ## The app's unit and UI tests on the simulator
 	@[ -n "$(SIM)" ] || { echo "\033[0;33m!\033[0m no simulator found:  make test-app SIM=<udid>"; exit 64; }
 	xcodebuild test -project $(PROJECT) -scheme $(SCHEME) -destination "$(DEST)" \
-	  -derivedDataPath $(DERIVED) CODE_SIGNING_ALLOWED=NO -quiet
+	  -derivedDataPath $(DERIVED) CODE_SIGNING_ALLOWED=NO -quiet; rc=$$?; \
+	  xcrun simctl terminate $(SIM) ng.tender.app >/dev/null 2>&1; \
+	  case "$$(xcrun simctl list devices | grep $(SIM))" in *"Tender Tests"*) xcrun simctl shutdown $(SIM) >/dev/null 2>&1;; esac; \
+	  exit $$rc
 	@python3 scripts/test-summary.py $(DERIVED)
 
 .PHONY: build

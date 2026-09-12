@@ -255,3 +255,18 @@ a pass.
 SwiftUI's default tint put a blue *Done* on a screen no test could object
 to, because the audit checks contrast and size, not whether a colour is in
 the palette. A person looking at the screen caught it. One `.tint()`.
+
+## 2026-09-12 — The test simulator talked through the speakers
+
+Moved the tests to a second simulator, "Tender Tests", so they stop driving
+the one a person is looking at — the largest-text launches were alarming to
+watch. Then the headless simulator's audio came out of the Mac's speakers:
+VoiceOver is not running in a test, so the app used the synthesiser, and
+after the suite the app was still open on a device nobody could see, saying
+*"I can't see a note"* to the room.
+
+Every UI test now launches with `-silent`, which keeps the synthesiser quiet
+— a test reads what was said through a spy, never through a speaker — and
+`make test-app` terminates the app and shuts "Tender Tests" down when the
+suite ends. The device tests are the exception: the person holding the note
+should hear the phone.

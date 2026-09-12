@@ -6,7 +6,7 @@ final class DeniedTests: XCTestCase {
     @MainActor
     func testADeniedCameraIsOneSentenceAndOneButton() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-cameraDenied"]
+        app.launchArguments = ["-cameraDenied", "-silent"]
         app.launch()
         let sentence = app.staticTexts["Tender needs the camera to see the note. Open Settings to allow it."]
         XCTAssertTrue(sentence.waitForExistence(timeout: 5), "the denied state never appeared")
