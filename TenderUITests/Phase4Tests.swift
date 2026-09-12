@@ -59,6 +59,9 @@ final class Phase4Tests: XCTestCase {
         for label in expected {
             XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 3), label)
         }
+        // No thousands separator: `Text("\(Int)")` prints 1,000 for the locale,
+        // and a comma is a speck to a low-vision reader. Plain digits, every value.
+        XCTAssertTrue(app.staticTexts["₦1000"].exists, "the numeral should be 1000, not 1,000")
         app.buttons["five hundred naira, long long"].tap()   // says it, pulses it; must not crash or navigate
         XCTAssertTrue(app.buttons["five hundred naira, long long"].exists)
         try audit(app)

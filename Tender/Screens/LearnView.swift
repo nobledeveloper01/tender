@@ -19,7 +19,7 @@ struct LearnView: View {
                         reader.demonstrate(value)
                     } label: {
                         HStack(spacing: Gap.m) {
-                            Text("₦\(value.rawValue)")
+                            Text("₦" + String(value.rawValue))
                                 .font(Type.headlineFont())
                                 .foregroundStyle(palette.textPrimary)
                                 .frame(minWidth: 96, alignment: .leading)

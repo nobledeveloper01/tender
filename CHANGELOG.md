@@ -86,6 +86,8 @@ Entries say *why*, not just what.
 
 ### Fixed
 
+- The ₦1000 numeral printed as *1,000* — a locale separator from string
+  interpolation — on the one value that got one. Plain digits everywhere.
 - **The settings toggles changed nothing.** Speech and haptics now read the
   stored setting at the moment they act; absent means on.
 - **The app repeated its framing sentence every second** for as long as no

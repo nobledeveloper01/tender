@@ -85,7 +85,7 @@ struct CameraScreen: View {
 
     private func numeral(_ note: Note, colour: Color, palette: Palette) -> some View {
         VStack(spacing: Gap.s) {
-            Text("\(note.value.rawValue)")
+            Text(String(note.value.rawValue))
                 .font(.system(size: numeralSize, weight: .bold, design: .rounded))
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
