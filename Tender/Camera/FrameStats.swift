@@ -45,8 +45,12 @@ struct FrameStats: Sendable, Equatable {
                 sum += l; sumSq += l * l; n += 1
                 if l > 0.97 { clippedCount += 1 }
                 // A banknote is paper: moderately saturated, mid-luminance,
-                // not a skin tone and not a white wall. A coarse gate; the
-                // model does the real work on a frame that passes it.
+                // not a white wall and not the dark. A coarse gate that a hand
+                // also passes — warm skin sits in the same band as the ₦5,
+                // ₦10 and ₦1000, and a test proved it — so what this excludes
+                // is walls, tables and the dark, and a hand reaches the
+                // classifier, whose answer for a hand is "I don't recognise
+                // this". The thresholds are provisional until a handset (R2).
                 let mx = max(r, g, b), mn = min(r, g, b)
                 let sat = mx == 0 ? 0 : (mx - mn) / mx
                 if l > 0.12, l < 0.9, sat > 0.12, sat < 0.85 { noteLike += 1 }

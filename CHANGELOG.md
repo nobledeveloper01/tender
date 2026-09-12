@@ -49,6 +49,10 @@ Entries say *why*, not just what.
   the same framing to once a second, abandon a slow classifier and never speak
   its late answer — through injectable output channels and spies, with two
   mutations proving the tests can fail.
+- `FrameStats` tested on frames built to move each of its four numbers, and
+  timed. The test found the colour gate's comment overclaiming — it does not
+  exclude a hand, and cannot without excluding three notes — so the comment,
+  the test and R2 on the ledger now say what it does exclude.
 - Screenshots in the README, taken on the simulator from fixture photographs
   and captioned as such; `make screenshot` to retake, and `doc-check` warns
   when they fall behind the app.

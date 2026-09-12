@@ -210,3 +210,24 @@ and the late answer is never spoken; start over forgets and repeat repeats.
 All four passed first time, which is when to check they can fail. Two
 mutations — the throttle removed, the budget made infinite — each failed
 exactly the test that guards it and no other.
+
+## 2026-09-12 — The four numbers, and a comment that overclaimed
+
+`FrameStats` tested on frames built to move each number: sharp beats blurred
+by more than four times on detail, a note covering a quarter of a table
+scores a quarter, half a frame of white counts as half clipped, and a
+640×480 frame measures in well under a tenth of a camera frame on a debug
+build on the simulator.
+
+### What surprised us
+
+**The code said the colour gate excluded "a skin tone". It does not.** A
+hand filling the frame scored coverage 1.0, because warm skin sits in the
+same luminance and saturation band as the ₦5, ₦10 and ₦1000. There is no
+threshold that removes the hand and keeps those notes. So the comment now
+says what the gate does exclude — walls, tables and the dark — and a test
+asserts the limitation, so that a later "improvement" that starts excluding
+hands also starts excluding three notes in the test rather than in a
+market. R2's row on the ledger says it too. A hand reaches the classifier,
+whose answer for a hand is *"I don't recognise this"*; whether that holds in
+a market is a question for the handset.
