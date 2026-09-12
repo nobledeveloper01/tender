@@ -45,6 +45,9 @@ Entries say *why*, not just what.
   text size without a clipped word on either screen, the splash sweeping with
   Reduce Motion on, a tap that repeats and changes nothing.
 - The App Store text, in `docs/APPSTORE.md`, read by `copy-check`.
+- Screenshots in the README, taken on the simulator from fixture photographs
+  and captioned as such; `make screenshot` to retake, and `doc-check` warns
+  when they fall behind the app.
 - **The camera preview**, dimmed behind the numeral; **the permission-denied
   state** — one sentence, one 64 pt button to Settings, spoken on appearance,
   and never dressed as *"I can't see a note"*; and **shake to start over**.

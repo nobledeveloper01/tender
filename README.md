@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/mark.png" width="80" alt="The Tender mark: a banknote, its portrait window, and three pulses — short, short, long" />
+</p>
+
 # Tender
 
 **A naira note identifier for blind and low-vision Nigerians. Point the camera, hear the
@@ -16,6 +20,16 @@ market too loud to hear it. A tap says it again. Fully on-device, no network, no
 nothing stored.
 
 See [`docs/00-PRODUCT-STATEMENT.md`](docs/00-PRODUCT-STATEMENT.md) for the full analysis.
+
+<p align="center">
+  <img src="docs/screenshots/01-splash.png" width="240" alt="The splash: the mark, a warm bloom, the wordmark, over the near-black the launch screen paints" />
+  <img src="docs/screenshots/04-too-dark.png" width="240" alt="The camera screen saying Too dark — spoken, felt as one soft pulse, and shown" />
+  <img src="docs/screenshots/03-not-sure.png" width="240" alt="The placeholder classifier's only answer: I don't recognise this" />
+</p>
+
+> **Every screen above is the simulator, which has no camera.** The frames come from
+> fixture photographs pushed through the same pipeline the camera feeds, and the
+> answer is the placeholder's, which recognises nothing on purpose.
 
 > **This is the one native, iOS-only project in a portfolio of cross-platform ones**, and
 > the reason is written down before any code:
@@ -41,8 +55,19 @@ person, and [`docs/DATASET-GUIDE.md`](docs/DATASET-GUIDE.md) is what that person
 
 The pure-Swift domain — the eleven notes, the eight values, the three sentences and the
 two numbers that choose between them — lives in a package that imports nothing, not even
-Foundation, and tests in seconds with no simulator. `make coverage-gate` will hold it above
+Foundation, and tests in seconds with no simulator. `make coverage-gate` holds it above
 95%.
+
+<p align="center">
+  <img src="docs/screenshots/05-largest-text.png" width="230" alt="The answer at the largest accessibility text size: the sentence wraps to three lines and fills the width, nothing clipped" />
+  <img src="docs/screenshots/06-camera-refused.png" width="230" alt="The camera refused: one sentence, one 64-point button that opens Settings, spoken the moment it appears" />
+</p>
+
+**Nothing requires sight, and the simulator can prove part of that.** Every screen passes
+Xcode's accessibility audit — every check but contrast, which the audit cannot read over a
+gradient and `ContrastTests` measures at 7:1 instead — at the default text size and at the
+largest. The splash sweeps with Reduce Motion on because a timer ends it, not an animation.
+A refused camera is one sentence and one button, never dressed as *"I can't see a note"*.
 
 ## The eleven notes
 

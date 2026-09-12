@@ -157,6 +157,15 @@ run: build ## Install and launch on the simulator
 
 # --- documentation ----------------------------------------------------------
 
+.PHONY: screenshot
+screenshot: ## Capture a booted simulator screen:  make screenshot N=02-camera
+	@if [ -z "$(N)" ]; then \
+	  echo "\033[0;33m!\033[0m no name given:  make screenshot N=02-camera"; \
+	  ls docs/screenshots 2>/dev/null | sed 's/\.png$$//' | sed 's/^/    /'; \
+	else \
+	  TENDER_SIM=$(SIM) scripts/screenshot.sh "$(N)"; \
+	fi
+
 .PHONY: adr
 adr: ## Scaffold the next ADR:  make adr T="the decision"
 	@scripts/new-adr.sh "$(T)"
