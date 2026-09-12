@@ -25,6 +25,19 @@ Entries say *why*, not just what.
   first run: fixed-size fonts that ignored Dynamic Type, and a contrast
   failure that turned out to be the audit's inability to read a gradient.
 - CI on push, on a macOS runner with a pinned Xcode, running the same `make ci`.
+- **Phase 1's tooling, ahead of the photographs.** `make dataset-check` counts
+  the dataset against the gate and reads the classes from the `Note` enum;
+  `make dataset-import` files a batch by the naming convention and holds every
+  seventh out, by position rather than choice; `make dataset-manifest` writes
+  the counts. [`docs/DATASET-GUIDE.md`](docs/DATASET-GUIDE.md) is what the
+  photographer is handed. Proved on 3,960 synthetic images, which found a
+  cross-class duplicate bug in the import tool before any real photograph did.
+
+### Fixed
+
+- `splash-check` compared the icon byte for byte and failed on CI, whose Pillow
+  encodes the same picture differently. It compares pixels now, with a
+  tolerance proved in both directions.
 - The documents: product statement, roadmap with an exit gate per phase, the
   release ledger, the design system, and three ADRs — why this project is
   native and iOS-only, why the domain imports nothing, and why the app names

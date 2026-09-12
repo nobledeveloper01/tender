@@ -81,3 +81,38 @@ coverage, which went to 39% with the verdict tests removed. The break-test
 found one cosmetic defect: `domain-purity` printed the raw regex instead of
 the name. Fixed. A gate nobody has watched fail is a gate nobody knows the
 configuration of.
+
+## 2026-09-12 — The dataset tools, and two gates that were wrong
+
+Phase 1's tooling, before a single photograph exists: `make dataset-check`
+counts the dataset against the gate, `make dataset-import` files a batch by
+the naming convention with every seventh held out, and
+`docs/DATASET-GUIDE.md` is what the photographer is handed. Proved on 3,960
+synthetic images: a complete dataset passes; a re-import skips every file; a
+planted held-out leak, a short class and a stray folder each go red.
+
+### What surprised us
+
+**The import tool had a real bug, and the proof found it.** Re-importing a
+batch under a *different* class filed all sixty again, because the duplicate
+check only looked inside the target class — so the same photograph could be
+labelled two notes. The gate then caught the consequence as a held-out leak,
+which is the gate working, but the tool should never have let it in. Now it
+hashes the whole dataset and names the other class.
+
+**The first synthetic dataset leaked, and it was the generator's fault.**
+Tiny solid-colour JPEGs quantise to identical bytes, so "different"
+photographs had the same content and the leak detector fired on all of them.
+Right answer, wrong reason for it to have to. PNGs with unique pixels for the
+proof.
+
+**`splash-check` failed on CI for the wrong reason.** It compared the icon
+byte for byte with a fresh drawing, and the runner's Pillow encodes PNGs
+differently — same picture, different file. A gate that fails on encoder
+trivia is the mirror of one that passes on cache trivia. It now compares
+pixels with a tolerance, proved both ways: a re-encoded copy passes, a moved
+palette colour fails.
+
+**CI needed telling the runner is disposable.** Homebrew's Python refuses
+`pip install` under PEP 668; `--break-system-packages` is honest on a VM that
+is thrown away after the run and nowhere else.

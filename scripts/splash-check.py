@@ -25,6 +25,21 @@ ROOT = Path(__file__).resolve().parent.parent
 GREEN, RED, RESET = "\033[0;32m", "\033[0;31m", "\033[0m"
 
 
+def pixels_differ(a: Path, b: Path) -> str | None:
+    """None if the two images are the same picture; otherwise why not."""
+    from PIL import Image, ImageChops
+    ia, ib = Image.open(a).convert("RGBA"), Image.open(b).convert("RGBA")
+    if ia.size != ib.size:
+        return f"{ia.size} vs {ib.size}"
+    diff = ImageChops.difference(ia, ib).convert("L")
+    hist = diff.histogram()
+    total = ia.size[0] * ia.size[1]
+    big = sum(hist[9:])            # pixels off by more than 8 of 255
+    if big > total * 0.001:        # more than a tenth of a percent of them
+        return f"{big} of {total} pixels differ"
+    return None
+
+
 def palette_dark_surface() -> str:
     src = (ROOT / "Tender/Design/Palette.swift").read_text()
     body = src[src.index("static let dark = Palette("):]
@@ -60,8 +75,15 @@ def main() -> int:
                 current = ROOT / rel
                 if not current.exists():
                     failures.append(f"{rel} is missing — run `make brandmark`")
-                elif fresh.read_bytes() != current.read_bytes():
-                    failures.append(f"{rel} is not what brandmark.py draws today — run `make brandmark`")
+                    continue
+                # Compare the picture, not the bytes. CI's Pillow encodes PNGs
+                # differently from this machine's — same drawing, different
+                # file — and the first CI run failed on exactly that. A moved
+                # palette colour changes thousands of pixels by a lot; an
+                # encoder or resampler changes a few by a little.
+                differs = pixels_differ(fresh, current)
+                if differs is not None:
+                    failures.append(f"{rel} is not what brandmark.py draws today ({differs}) — run `make brandmark`")
 
     for line in failures:
         print(f"{RED}✗{RESET} {line}")

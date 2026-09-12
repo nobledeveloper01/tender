@@ -7,6 +7,7 @@ DOMAIN  := TenderDomain
 PROJECT := Tender.xcodeproj
 SCHEME  := Tender
 DERIVED := .build/DerivedData
+DATASET ?= $(abspath ../tender-dataset)
 
 # The simulator to test on. `xcrun simctl list devices available` to pick.
 SIM ?= $(shell xcrun simctl list devices available 2>/dev/null | grep -m1 iPhone | grep -oE '[0-9A-F-]{36}')
@@ -22,10 +23,29 @@ help: ## Show this help
 # --- the gate ---------------------------------------------------------------
 
 .PHONY: ci
-ci: doc-check design-check counts-check copy-check network-check splash-check analyze test coverage-gate ## Everything CI runs
+ci: doc-check design-check counts-check copy-check network-check splash-check dataset-check analyze test coverage-gate ## Everything CI runs
 
 .PHONY: gates
 gates: doc-check design-check counts-check copy-check network-check splash-check coverage-gate ## The blocking gates alone. These never go yellow.
+
+# --- the dataset: Phase 1 ---------------------------------------------------
+#
+# Yellow with no dataset, so a fresh clone is green and honest; red when one is
+# present and short. `docs/DATASET-GUIDE.md` is what the photographer is handed.
+
+.PHONY: dataset-check
+dataset-check: ## Count the dataset against Phase 1's gate:  make dataset-check [DATASET=path]
+	@DATASET="$(DATASET)" python3 scripts/dataset-check.py
+
+.PHONY: dataset-import
+dataset-import: ## File a batch:  make dataset-import CLASS=n500new FACE=back COND=worn LIGHT=dusk D=<dir>
+	@if [ -z "$(CLASS)" ] || [ -z "$(FACE)" ] || [ -z "$(COND)" ] || [ -z "$(LIGHT)" ] || [ -z "$(D)" ]; then \
+	  echo "\033[0;33m!\033[0m usage:  make dataset-import CLASS=n500new FACE=back COND=worn LIGHT=dusk D=<dir>"; exit 64; fi
+	@DATASET="$(DATASET)" python3 scripts/dataset-import.py "$(CLASS)" "$(FACE)" "$(COND)" "$(LIGHT)" "$(D)"
+
+.PHONY: dataset-manifest
+dataset-manifest: ## Write MANIFEST.md beside the dataset, counted from the files
+	@DATASET="$(DATASET)" python3 scripts/dataset-manifest.py
 
 .PHONY: doc-check
 doc-check: ## Verify the documentation is present, well-formed and current

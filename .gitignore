@@ -9,6 +9,8 @@ docs/*
 !docs/screenshots/
 # The mark the README shows above the title. Drawn by `scripts/brandmark.py`.
 !docs/mark.png
+# What the photographer is handed. Required by doc-check, and required to be tracked.
+!docs/DATASET-GUIDE.md
 
 # The dataset is photographs of banknotes and lives beside the repo, not in
 # it. `make dataset-check` reads it from DATASET, which defaults to ../tender-dataset.
