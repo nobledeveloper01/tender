@@ -22,7 +22,9 @@ jobs:
           xcodebuild -version
 
       - name: Pillow, for the brand mark check
-        run: python3 -m pip install --user --quiet Pillow
+        # The runner's Python is Homebrew's and refuses pip under PEP 668. The
+        # runner is a throwaway VM, which is the one place that flag is honest.
+        run: python3 -m pip install --user --quiet --break-system-packages Pillow
 
       - name: A simulator to test on
         run: |
