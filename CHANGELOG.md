@@ -86,6 +86,11 @@ Entries say *why*, not just what.
 
 ### Fixed
 
+- **The app repeated its framing sentence every second** for as long as no
+  note appeared — the throttle allowed a repeat the moment a second had
+  passed. It announces on change now, and never faster than once a second.
+  The test that missed it listened for 300 ms; it listens for 2.6 s.
+
 - `splash-check` compared the icon byte for byte and failed on CI, whose Pillow
   encodes the same picture differently. It compares pixels now, with a
   tolerance proved in both directions.

@@ -94,15 +94,45 @@ final class ReaderTests: XCTestCase {
 
     // MARK: tests
 
-    func testTheSameFramingIsNotAnnouncedTwiceWithinASecond() async {
+    func testTheSameFramingIsSaidOnceHoweverLongItLasts() async {
+        // Sixty white frames over two and a half seconds. The first version
+        // of this test listened for 300 ms and passed while the app said
+        // the sentence again every second — a metronome a person heard from
+        // the next room. So: longer than a second, by a margin.
         let spy = Spy()
-        let reader = Reader(source: ScriptedSource(frame: frame(fill: 255), count: 10, gap: .milliseconds(30)),
+        let reader = Reader(source: ScriptedSource(frame: frame(fill: 255), count: 60, gap: .milliseconds(40)),
                             classifier: ScriptedClassifier(answer: nil, delay: .zero, calls: Counter()),
                             announcer: spy, haptics: spy)
         reader.start()
-        await settle(0.8)
+        await settle(2.6)
         reader.stop()
-        XCTAssertEqual(spy.said, ["I can't see a note."], "ten white frames in 300 ms; one sentence")
+        XCTAssertEqual(spy.said, ["I can't see a note."], "the same framing for 2.4 s; one sentence, not three")
+    }
+
+    func testAChangeOfFramingIsSaidAndAChangeBackIsSaidAgain() async {
+        // White, then black, then white: three sentences, in order.
+        let spy = Spy()
+        let white = frame(fill: 255), black = frame(fill: 0)
+        struct Sequence: FrameSource {
+            let script: [Frame]
+            func frames() -> AsyncStream<Frame> {
+                AsyncStream { c in
+                    Task {
+                        for f in script { c.yield(f); try? await Task.sleep(for: .milliseconds(120)) }
+                        c.finish()
+                    }
+                }
+            }
+            func start() {}
+            func stop() {}
+        }
+        let reader = Reader(source: Sequence(script: [white, white, black, black, white, white]),
+                            classifier: ScriptedClassifier(answer: nil, delay: .zero, calls: Counter()),
+                            announcer: spy, haptics: spy)
+        reader.start()
+        await settle(1.2)
+        reader.stop()
+        XCTAssertEqual(spy.said, ["I can't see a note.", "Too dark.", "I can't see a note."])
     }
 
     func testAReadyFrameIsClassifiedOnceAndTheVerdictSpokenOnceAndFelt() async {

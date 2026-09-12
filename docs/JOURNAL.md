@@ -270,3 +270,24 @@ Every UI test now launches with `-silent`, which keeps the synthesiser quiet
 `make test-app` terminates the app and shuts "Tender Tests" down when the
 suite ends. The device tests are the exception: the person holding the note
 should hear the phone.
+
+## 2026-09-12 — The metronome
+
+The voice that kept coming out of the speakers was not the second simulator.
+It was the app saying *"I can't see a note"* **once a second, for as long as no
+note appeared** — the throttle suppressed a repeat *within* a second and
+allowed one the moment a second had passed. A blind user with the phone in a
+pocket would hear it until they closed the app. The FRD said "not more than
+once per second"; what it meant was *on change, and never faster than once a
+second*. The letter was implemented and a metronome shipped.
+
+The test that guarded it listened for 300 ms and passed. It listens for 2.6 s
+now and, against the old code, hears three sentences and fails. A second test
+asserts that a change is said, and a change back is said again.
+
+### What surprised us
+
+**A person heard it from the next room before any test did.** Nothing on the
+simulator's screen changes when a sentence repeats, so no screenshot and no
+audit could see it, and the unit test had the wrong duration. The bug was
+audible and only audible. Which is the channel this product lives in.

@@ -87,7 +87,11 @@ final class Reader {
             coverage: stats.coverage, luminance: stats.luminance,
             clipped: stats.clipped, detail: stats.detail
         )
-        if judged != framing || verdict == nil {
+        // Announce on *change*, and never faster than once a second — not
+        // "once a second". The first version re-said "I can't see a note"
+        // every second for as long as no note appeared, which a person heard
+        // from the next room. Same framing, no change, no sentence.
+        if judged != framing {
             framing = judged
             if verdict == nil { announce(framing: judged, force: false) }
         }
