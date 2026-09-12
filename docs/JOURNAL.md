@@ -291,3 +291,17 @@ asserts that a change is said, and a change back is said again.
 simulator's screen changes when a sentence repeats, so no screenshot and no
 audit could see it, and the unit test had the wrong duration. The bug was
 audible and only audible. Which is the channel this product lives in.
+
+## 2026-09-12 — Two more, from one screenshot and one mistake
+
+**The build on the panel was the mutated one.** After proving the metronome
+test against the old code, the source was restored and the build was not,
+and the next install put the metronome back on the person's screen. "Still
+the same," they said, correctly. Rebuild before install, always; the
+Makefile's `run` target does, and hand installs must.
+
+**The settings toggles did nothing.** Both were off in a screenshot — nobody
+had turned them off; `@AppStorage` had simply never been read by anything.
+The announcer held a `var` the sheet never reached. Now `Preferences` reads
+the stored value at the moment of speaking or pulsing, absent means on, and
+a test sets both false and watches both channels refuse.

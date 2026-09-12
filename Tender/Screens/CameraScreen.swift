@@ -8,8 +8,8 @@ struct CameraScreen: View {
     @Bindable var reader: Reader
     @Environment(\.colorScheme) private var scheme
     @State private var showSettings = false
-    @AppStorage("speech.enabled") private var speechEnabled = true
-    @AppStorage("haptics.enabled") private var hapticsEnabled = true
+    @AppStorage(Preferences.speechKey) private var speechEnabled = true
+    @AppStorage(Preferences.hapticsKey) private var hapticsEnabled = true
     @ScaledMetric(relativeTo: .largeTitle) private var numeralSize = Type.numeralBase
 
     var body: some View {

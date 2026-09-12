@@ -14,7 +14,8 @@ protocol Pulsing: AnyObject {
 @MainActor
 final class Haptics: Pulsing {
     private var engine: CHHapticEngine?
-    var enabled = true
+    /// Read at the moment of pulsing, same as speech.
+    var enabled: Bool { Preferences.hapticsEnabled() }
 
     init() {
         guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }

@@ -19,7 +19,11 @@ final class Announcer: Speaking {
     /// audio still comes out of the Mac's speakers, and a test reads what
     /// was said through a spy, never through a speaker. VoiceOver
     /// announcements are unaffected — VoiceOver is not running in a test.
-    var speakWhenVoiceOverOff = !CommandLine.arguments.contains("-silent")
+    private let silent = CommandLine.arguments.contains("-silent")
+    /// The setting, read at the moment of speaking so a change takes effect
+    /// on the next sentence. The first version stored a `var` the settings
+    /// sheet never reached, so the toggle changed nothing.
+    var speakWhenVoiceOverOff: Bool { !silent && Preferences.speechEnabled() }
 
     func say(_ text: String) {
         if UIAccessibility.isVoiceOverRunning {
