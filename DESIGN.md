@@ -55,6 +55,12 @@ luminance contrast available and the one most low-vision users can still see. Gr
 **Colour is never the sole carrier of meaning.** Every state is spoken, felt and coloured.
 Lose two channels and the third still lands.
 
+**Xcode's accessibility audit cannot read the gradient.** It checks a view's declared
+background colour, not its pixels, so text over the canvas is reported as a contrast
+failure while the same text over a flat colour passes — found by experiment on the first
+run. The audit runs every check except that one; the contrast gate is `ContrastTests`,
+which measures every stop and asks for more than the audit does.
+
 ## Targets
 
 **The whole screen is the target.** A tap anywhere repeats the last announcement; a
