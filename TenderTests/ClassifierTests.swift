@@ -38,10 +38,11 @@ final class ClassifierTests: XCTestCase {
         XCTAssertEqual(white.clipped, 1, accuracy: 0.01)
         XCTAssertEqual(white.coverage, 0, accuracy: 0.01)   // a white wall is not a note
 
-        // Flat frames are the judge's "nothing" before they are anything else.
-        for s in [black, white] {
-            let f = FramingRule.judge(coverage: s.coverage, luminance: s.luminance, clipped: s.clipped, detail: s.detail)
-            XCTAssertEqual(f, .nothing)
-        }
+        // A black frame is too dark before it is anything else — in the dark,
+        // coverage means nothing. A white wall is lit and has no note in it.
+        let judgedBlack = FramingRule.judge(coverage: black.coverage, luminance: black.luminance, clipped: black.clipped, detail: black.detail)
+        let judgedWhite = FramingRule.judge(coverage: white.coverage, luminance: white.luminance, clipped: white.clipped, detail: white.detail)
+        XCTAssertEqual(judgedBlack, .tooDark)
+        XCTAssertEqual(judgedWhite, .nothing)
     }
 }

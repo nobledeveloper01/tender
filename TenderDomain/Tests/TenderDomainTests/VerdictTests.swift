@@ -68,12 +68,13 @@ struct VerdictTests {
 
 @Suite("Framing")
 struct FramingTests {
-    @Test("Order: nothing before light, light before blur, blur before ready")
+    @Test("Order: dark before nothing, nothing before bright, bright before blur, blur before ready")
     func order() {
-        // No note: nothing, even if it is also dark and blurred.
-        #expect(FramingRule.judge(coverage: 0.0, luminance: 0.0, clipped: 0, detail: 0) == .nothing)
-        // A note, dark, blurred: dark wins.
+        // Dark: too dark, whatever the coverage — in the dark, coverage means nothing.
+        #expect(FramingRule.judge(coverage: 0.0, luminance: 0.05, clipped: 0, detail: 0) == .tooDark)
         #expect(FramingRule.judge(coverage: 0.5, luminance: 0.1, clipped: 0, detail: 0) == .tooDark)
+        // Lit, no note: nothing, even if blurred.
+        #expect(FramingRule.judge(coverage: 0.0, luminance: 0.5, clipped: 0, detail: 0) == .nothing)
         // A note, bright by clipping, blurred: bright wins.
         #expect(FramingRule.judge(coverage: 0.5, luminance: 0.5, clipped: 0.2, detail: 0) == .tooBright)
         // A note, fine light, blurred: steady.

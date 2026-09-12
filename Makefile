@@ -23,7 +23,7 @@ help: ## Show this help
 # --- the gate ---------------------------------------------------------------
 
 .PHONY: ci
-ci: doc-check design-check counts-check copy-check network-check splash-check dataset-check analyze test coverage-gate ## Everything CI runs
+ci: doc-check design-check counts-check copy-check network-check splash-check dataset-check model-check analyze test coverage-gate ## Everything CI runs
 
 .PHONY: gates
 gates: doc-check design-check counts-check copy-check network-check splash-check coverage-gate ## The blocking gates alone. These never go yellow.
@@ -76,6 +76,19 @@ splash-check: ## Fail if the launch screen, icon or mark are not what the palett
 # you forget to run this after a palette change.
 brandmark: ## Redraw the icon and docs/mark.png from the palette
 	@python3 scripts/brandmark.py
+
+# --- the model: Phase 2 -----------------------------------------------------
+
+.PHONY: model
+# Trains with Create ML on DATASET/train, evaluates on DATASET/test, writes the
+# model and docs/MODEL-REPORT.md. The report is the published claim; the model
+# is an artefact and is not tracked.
+model: ## Train the classifier and write docs/MODEL-REPORT.md:  make model [ITERATIONS=25]
+	@TENDER_ROOT="$(CURDIR)" DATASET="$(DATASET)" ITERATIONS="$(or $(ITERATIONS),25)" swift scripts/train.swift 2>&1 | grep -vE 'DeprecatedDeclaration|^\s*[0-9]+ \||^\s*\||`-'
+
+.PHONY: model-check
+model-check: ## Refuse the model if the report says any class is below 95% or ₦500 and ₦1000 are ever confused
+	@python3 scripts/model-check.py
 
 # --- code -------------------------------------------------------------------
 

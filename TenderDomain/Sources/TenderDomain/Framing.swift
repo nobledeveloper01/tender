@@ -29,11 +29,15 @@ public enum FramingRule {
 
     /// Judge one frame. Total: every input yields exactly one `Framing`.
     ///
-    /// Order matters and is asserted: with no note there is no point judging
-    /// the light, so `nothing` is decided first.
+    /// Order matters and is asserted. Darkness first: in the dark, coverage
+    /// cannot be measured, so "I can't see a note" would be a claim about
+    /// the note when the truth is about the light — and it sends a blind
+    /// user checking their grip instead of finding a window. Found by the
+    /// dark fixture on the simulator, which the first version called
+    /// `nothing`. Then `nothing`, then the rest.
     public static func judge(coverage: Double, luminance: Double, clipped: Double, detail: Double) -> Framing {
-        if coverage < leastCoverage { return .nothing }
         if luminance < darkest { return .tooDark }
+        if coverage < leastCoverage { return .nothing }
         if luminance > brightest || clipped > mostClipped { return .tooBright }
         if detail < leastDetail { return .steady }
         return .ready

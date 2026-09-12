@@ -25,12 +25,27 @@ struct RootView: View {
 @MainActor
 enum Wiring {
     static func reader() -> Reader {
-        let source: FrameSource = CameraSession.isAvailable ? CameraSession() : NoCameraSource()
+        // `-fixture <name>` feeds a photograph instead of the camera: the UI
+        // tests and the simulator use it. A launch argument cannot be set on
+        // an installed app by its user, so this is not a path a farmer's
+        // phone can take.
+        let source: FrameSource
+        if let name = fixtureArgument(), let fixture = FixtureSource(named: name) {
+            source = fixture
+        } else {
+            source = CameraSession.isAvailable ? CameraSession() : NoCameraSource()
+        }
         return Reader(
             source: source,
             classifier: UntrainedClassifier(),   // R3 replaces this. It recognises nothing, on purpose.
             announcer: Announcer(),
             haptics: Haptics()
         )
+    }
+
+    private static func fixtureArgument() -> String? {
+        let args = CommandLine.arguments
+        guard let i = args.firstIndex(of: "-fixture"), i + 1 < args.count else { return nil }
+        return args[i + 1]
     }
 }

@@ -17,7 +17,7 @@ mentions Android because nothing below runs on it.
 
 ---
 
-## Phase 0 — Foundation · **current**
+## Phase 0 — Foundation · *cleared*
 
 The Xcode project, built and tested from the command line. The pure-Swift
 domain as a package with no platform imports: the eleven notes, the eight
@@ -37,7 +37,16 @@ its source — and would put a wrong number in front of a blind person holding
 cash. The placeholder announces itself, as it does in every project in this
 portfolio.
 
-## Phase 1 — The dataset
+**Cleared 2026-09-12.** All four clauses on the simulator and on CI: 19 domain
+tests in 2 ms, 11 app tests including the accessibility audit, a fixture
+photograph walked through the whole pipeline to the placeholder's *"I don't
+recognise this"*, and `make ci` green on a macOS runner. The audit found two
+defects on its first run — fixed-size fonts, and its own inability to read a
+gradient — and the dark fixture found a third: the judge decided *nothing*
+before *too dark*, so in the dark a blind user was told to check their grip
+when the problem was the light. Darkness is judged first now, and asserted.
+
+## Phase 1 — The dataset · **current**
 
 Photographs of every note in circulation: eleven designs, both faces, new and
 worn, flat and creased, under daylight, tungsten and the light of a market at
@@ -54,6 +63,14 @@ This is the phase the whole project is chosen for. Every other project in this
 portfolio has a hardest gate that waits on somebody else — native speakers, a
 disease dataset, a handset. This one waits on a person with a phone and a
 handful of naira, which is a week's work that one person can do.
+
+**The tooling is ahead of the photographs.** `make dataset-import` files a
+batch by the naming convention and holds every seventh out; `make
+dataset-check` counts against this gate and refuses a leak between the two
+sets by content hash; [`DATASET-GUIDE.md`](DATASET-GUIDE.md) is what the
+photographer is handed. Phase 2's `make model` and `make model-check` are
+written and proved on synthetic data too, so the day the dataset clears, the
+model is one command and the report it writes is the one the gate reads.
 
 ## Phase 2 — The classifier
 

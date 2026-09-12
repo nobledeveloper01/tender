@@ -32,10 +32,12 @@ See [`docs/00-PRODUCT-STATEMENT.md`](docs/00-PRODUCT-STATEMENT.md) for the full 
 
 ## Status
 
-**Phase 0 of 5 — foundation.** The documents are written and nothing is built. The
-placeholder classifier, when it exists, will recognise nothing and say so — because a
-stand-in that returned a plausible denomination would be indistinguishable from the
-product to anybody not reading its source.
+**Phase 1 of 5 — the dataset.** Phase 0 is cleared: the app builds and tests from the
+command line, VoiceOver reads every control, CI runs on push, and the placeholder
+classifier recognises nothing and says so — because a stand-in that returned a plausible
+denomination would be indistinguishable from the product to anybody not reading its
+source. What is missing is photographs of eleven banknotes, which is a week's work for one
+person, and [`docs/DATASET-GUIDE.md`](docs/DATASET-GUIDE.md) is what that person is handed.
 
 The pure-Swift domain — the eleven notes, the eight values, the three sentences and the
 two numbers that choose between them — lives in a package that imports nothing, not even

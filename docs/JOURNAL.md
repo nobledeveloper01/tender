@@ -116,3 +116,31 @@ palette colour fails.
 **CI needed telling the runner is disposable.** Homebrew's Python refuses
 `pip install` under PEP 668; `--break-system-packages` is honest on a VM that
 is thrown away after the run and nowhere else.
+
+## 2026-09-12 — Phase 0 cleared, and the tools for the next two phases
+
+CI went green on the third run and Phase 0's last clause with it. `PHASE` is 1.
+
+Built ahead of the photographs: a fixture source so the simulator can push a
+picture through the whole pipeline, and three UI tests that do — a note-like
+frame reaches the placeholder and gets *"I don't recognise this"* and never a
+number; a white wall is *"I can't see a note"*; a dark frame is *"Too dark"*.
+Then Phase 2's `make model` (Create ML, held-out evaluation, a per-class
+report with the ₦500 ↔ ₦1000 confusion count) and `make model-check`, which
+refuses the report on a low class, a thin held-out set, a cross-value
+confusion, or a class list that does not match the code. Both proved on
+synthetic data in a temporary directory, never near the app's model path.
+`CoreMLClassifier` exists and is not wired; the switch is one line in
+`Wiring`, made when `model-check` passes on real photographs.
+
+### What surprised us
+
+**The dark fixture found a design defect.** The judge decided *nothing*
+before *too dark*, so in the dark — where coverage cannot be measured — a
+blind user was told *"I can't see a note"* and sent checking their grip when
+the problem was the light. Darkness first now, in the domain, asserted, and
+the FRD corrected to match.
+
+**The synthetic model was 75.8% accurate and the gate refused it**, which is
+the right outcome twice: the pipeline runs end to end, and the number it
+produced on coloured squares means nothing, and `model-check` said so.

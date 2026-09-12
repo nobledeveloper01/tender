@@ -33,6 +33,21 @@ Entries say *why*, not just what.
   photographer is handed. Proved on 3,960 synthetic images, which found a
   cross-class duplicate bug in the import tool before any real photograph did.
 
+- **Phase 2's tooling, ahead of the model.** `make model` trains with Create ML
+  and writes `docs/MODEL-REPORT.md` from the held-out set — per-class recall
+  and precision, what each was confused with, and the ₦500 ↔ ₦1000 count;
+  `make model-check` refuses to wire it below 95% on any class or on a single
+  cross-value confusion. `CoreMLClassifier` is written and not wired.
+- **A fixture source**, so the simulator can push a photograph through the
+  whole pipeline, and three UI tests that walk it end to end.
+
+### Changed
+
+- **Phase 0 cleared; `PHASE` is 1.**
+- The judge decides *too dark* before *nothing*: in the dark, coverage means
+  nothing, and *"I can't see a note"* sent a blind user checking their grip
+  when the problem was the light. Found by the dark fixture.
+
 ### Fixed
 
 - `splash-check` compared the icon byte for byte and failed on CI, whose Pillow
