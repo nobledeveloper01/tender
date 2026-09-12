@@ -66,6 +66,15 @@ final class Reader {
         }
     }
 
+    /// Learn a pattern: say the value and pulse it, exactly as a sure answer
+    /// would. The original design's sentence, so no "new design" suffix.
+    func demonstrate(_ value: Naira) {
+        let note = Note.allCases.first { $0.value == value && $0.design == .original }!
+        let text = Announcement.text(for: .sure(note))
+        announcer.say(text)
+        haptics.play(HapticPattern.pulses(for: value), intensity: 1.0)
+    }
+
     /// The magic tap, or a shake: forget the answer and go back to framing.
     func startOver() {
         verdict = nil

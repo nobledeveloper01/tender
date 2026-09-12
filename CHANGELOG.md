@@ -45,6 +45,12 @@ Entries say *why*, not just what.
   text size without a clipped word on either screen, the splash sweeping with
   Reduce Motion on, a tap that repeats and changes nothing.
 - The App Store text, in `docs/APPSTORE.md`, read by `copy-check`.
+- **Learn the patterns**, in Settings: eight rows that say the value and
+  pulse its pattern through the same channels an answer uses. The vocabulary
+  had nowhere to be learned, and R4 asks blind users to judge it.
+- `make device-check D=<id>` — the R2 harness: two tests that need a real
+  camera and skip by name anywhere without one. The suite summary counts
+  skips, so a skip never reads as a pass.
 - The reader's rules tested directly — speak once, classify once, throttle
   the same framing to once a second, abandon a slow classifier and never speak
   its late answer — through injectable output channels and spies, with two
@@ -66,6 +72,8 @@ Entries say *why*, not just what.
 ### Changed
 
 - **Phase 0 cleared; `PHASE` is 1.**
+- The settings sheet is tinted with the palette's `ready`, not the system
+  blue — caught by eye, not by any test.
 - Settings' *Done* is a 64 pt row, not a toolbar item — toolbar items are sized
   by the bar and stopped scaling at the largest text size.
 - The judge decides *too dark* before *nothing*: in the dark, coverage means

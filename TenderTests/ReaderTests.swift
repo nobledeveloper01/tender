@@ -147,4 +147,18 @@ final class ReaderTests: XCTestCase {
         reader.stop()
         XCTAssertEqual(spy.said.last, spy.said[spy.said.count - 2], "repeat says the last thing again, unchanged")
     }
+
+    func testDemonstratingAValueSaysItAndPulsesItLikeASureAnswer() {
+        let spy = Spy()
+        let reader = Reader(source: ScriptedSource(frame: frame(fill: 0), count: 0, gap: .zero),
+                            classifier: ScriptedClassifier(answer: nil, delay: .zero, calls: Counter()),
+                            announcer: spy, haptics: spy)
+        for value in Naira.allCases {
+            reader.demonstrate(value)
+        }
+        XCTAssertEqual(spy.said, Naira.allCases.map { "\($0.spoken) naira." })
+        XCTAssertEqual(spy.played.map(\.0), Naira.allCases.map { HapticPattern.pulses(for: $0) })
+        XCTAssertTrue(spy.played.allSatisfy { $0.1 == 1.0 }, "learning plays at full strength, like a sure answer")
+        XCTAssertFalse(spy.said.contains { $0.contains("new design") }, "learning uses the original design's sentence")
+    }
 }

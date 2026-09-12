@@ -149,6 +149,21 @@ coverage-gate: ## Fail if the domain drops below 95%
 	cd $(DOMAIN) && swift test --enable-code-coverage >/dev/null
 	@python3 scripts/coverage-report.py "$$(cd $(DOMAIN) && swift test --show-codecov-path)" --gate 95
 
+.PHONY: device-check
+# The half of Phase 3's gate a machine can reach. Skips on a simulator, by
+# name; a skip is not a pass and R2 does not move on one.
+#
+#   make device-check D=<device id>     (xcrun xctrace list devices)
+device-check: ## Run the on-device tests:  make device-check D=<device id>
+	@if [ -z "$(D)" ]; then \
+	  echo "\033[0;33m!\033[0m no device given. \`xcrun xctrace list devices\`, then: make device-check D=<id>"; \
+	  exit 64; \
+	fi
+	@echo "\033[0;33m!\033[0m Hold a note in front of the camera for the first test, and cover"
+	@echo "  the lens for the second. The phone asks for camera permission once."
+	xcodebuild test -project $(PROJECT) -scheme $(SCHEME) -destination "platform=iOS,id=$(D)" \
+	  -only-testing:TenderUITests/DeviceTests -derivedDataPath $(DERIVED)
+
 .PHONY: run
 run: build ## Install and launch on the simulator
 	xcrun simctl boot $(SIM) 2>/dev/null || true

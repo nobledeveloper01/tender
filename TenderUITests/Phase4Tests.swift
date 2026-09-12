@@ -35,9 +35,32 @@ final class Phase4Tests: XCTestCase {
                           "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"])
         XCTAssertTrue(app.staticTexts["I don't recognise this."].waitForExistence(timeout: 5))
         try audit(app)
-        // And the settings sheet, which is the only other screen.
+        // And the settings sheet, and the learn screen behind it.
         app.buttons["Settings"].tap()
         XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 3))
+        try audit(app)
+        app.buttons["Learn the patterns"].firstMatch.tap()
+        XCTAssertTrue(app.buttons["five naira, short"].waitForExistence(timeout: 3))
+        try audit(app)
+    }
+
+    /// The learn screen: eight rows, each labelled with the value and its
+    /// pattern in words, so VoiceOver reads "five hundred naira, long long".
+    @MainActor
+    func testTheLearnScreenNamesEveryValueAndItsPattern() throws {
+        let app = launch(["-fixture", "blank"])
+        app.buttons["Settings"].tap()
+        app.buttons["Learn the patterns"].firstMatch.tap()
+        let expected = [
+            "five naira, short", "ten naira, short short", "twenty naira, short short short",
+            "fifty naira, long", "one hundred naira, long short", "two hundred naira, long short short",
+            "five hundred naira, long long", "one thousand naira, long long long",
+        ]
+        for label in expected {
+            XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 3), label)
+        }
+        app.buttons["five hundred naira, long long"].tap()   // says it, pulses it; must not crash or navigate
+        XCTAssertTrue(app.buttons["five hundred naira, long long"].exists)
         try audit(app)
     }
 

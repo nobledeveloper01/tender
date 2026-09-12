@@ -114,8 +114,10 @@ The accessibility pass, which is the product. A full VoiceOver audit: every
 element labelled, every announcement interrupting correctly, the rotor useful.
 Dynamic Type to the largest accessibility size without a truncated word. Voice
 Control. Reduce Motion honoured, including on the splash. The haptic vocabulary
-tested by people who will use it, not by the people who designed it. The app
-operable with the screen face down.
+tested by people who will use it, not by the people who designed it — in
+front of *Learn the patterns* in Settings, which says and pulses each value
+through the same channels an answer uses. The app operable with the screen
+face down.
 
 **Exit gate**. *A blind user identifies five notes in under a minute without
 sighted help, on their own phone, and says the haptic pattern told them the

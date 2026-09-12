@@ -25,13 +25,17 @@ def main() -> int:
                          capture_output=True, text=True, check=True).stdout
     d = json.loads(out)
     total, passed, failed = d.get("totalTestCount", 0), d.get("passedTests", 0), d.get("failedTests", 0)
-    if total == 0:
+    skipped = d.get("skippedTests", 0)
+    if total == 0 or passed == 0:
         print(f"{RED}✗{RESET} the app suite executed 0 tests")
         return 1
     if failed:
         print(f"{RED}✗{RESET} app suite: {failed} of {total} failed")
         return 1
-    print(f"{GREEN}✓{RESET} app suite: {passed} of {total} passed on the simulator, including the accessibility audit")
+    # A skip is named, not hidden: the device tests skip on a simulator, and
+    # R2 does not move on a skip.
+    note = f", {skipped} skipped (the device tests — R2 needs a handset)" if skipped else ""
+    print(f"{GREEN}✓{RESET} app suite: {passed} of {total} passed on the simulator, including the accessibility audit{note}")
     return 0
 
 

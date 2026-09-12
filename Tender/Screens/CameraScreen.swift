@@ -60,7 +60,7 @@ struct CameraScreen: View {
             .padding(Gap.s)
         }
         .sheet(isPresented: $showSettings) {
-            SettingsSheet(speechEnabled: $speechEnabled, hapticsEnabled: $hapticsEnabled)
+            SettingsSheet(reader: reader, speechEnabled: $speechEnabled, hapticsEnabled: $hapticsEnabled)
         }
         .onAppear { reader.start() }
         .onDisappear { reader.stop() }
@@ -121,6 +121,7 @@ struct CameraScreen: View {
 }
 
 struct SettingsSheet: View {
+    let reader: Reader
     @Binding var speechEnabled: Bool
     @Binding var hapticsEnabled: Bool
     @Environment(\.dismiss) private var dismiss
@@ -129,10 +130,12 @@ struct SettingsSheet: View {
     var body: some View {
         let palette = Palette.current(scheme)
         NavigationStack {
-            // Three rows, each 64 pt. Done is a row rather than a toolbar item
+            // Four rows, each 64 pt. Done is a row rather than a toolbar item
             // because toolbar items are sized by the bar, which caps them at
             // the largest text sizes — the audit found it — and below 64.
             List {
+                NavigationLink(Strings.learn) { LearnView(reader: reader) }
+                    .frame(minHeight: Target.standard)
                 Toggle(Strings.speechWhenVoiceOverOff, isOn: $speechEnabled)
                     .frame(minHeight: Target.standard)
                 Toggle(Strings.haptics, isOn: $hapticsEnabled)

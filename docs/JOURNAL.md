@@ -231,3 +231,27 @@ hands also starts excluding three notes in the test rather than in a
 market. R2's row on the ledger says it too. A hand reaches the classifier,
 whose answer for a hand is *"I don't recognise this"*; whether that holds in
 a market is a question for the handset.
+
+## 2026-09-12 — The vocabulary had nowhere to be learned
+
+Said "nothing left to build from this desk" and then read the ledger again.
+R4 asks blind users to judge the haptic vocabulary, and the app gave them no
+way to meet a pattern except by holding the note it belongs to. DESIGN.md
+said "learnable in a minute" and there was no minute. So: Settings → *Learn
+the patterns*, eight rows, each saying its value and pulsing its pattern
+through the reader's own two channels, so learning feels exactly like the
+thing being learned. VoiceOver reads a row as *"five hundred naira, long
+long"*. Tested through the spies and under the audit at both text sizes.
+
+And R2 needs a handset that does not exist yet, but the test that will run
+on it can: `make device-check D=<id>`, two tests — a note named within the
+budget, a covered lens said to be dark and never a number — that skip by name
+on a simulator. The summary line now counts skips so one can never read as
+a pass.
+
+### What surprised us
+
+**The settings sheet was system blue.** Every action in the palette is yellow;
+SwiftUI's default tint put a blue *Done* on a screen no test could object
+to, because the audit checks contrast and size, not whether a colour is in
+the palette. A person looking at the screen caught it. One `.tint()`.

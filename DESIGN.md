@@ -142,6 +142,12 @@ The grammar: shorts count up to twenty, one long is fifty, hundreds add shorts t
 five hundred and a thousand are longs alone. Two designs of the same value feel the same;
 the difference is spoken, not felt.
 
+**Where it is learned:** Settings → *Learn the patterns*. Eight rows; tapping one says the
+value and pulses its pattern through the same two channels a real answer uses, so learning
+feels exactly like the thing being learned. VoiceOver reads each row as *"five hundred
+naira, long long"*. This is the minute in "learnable in a minute", and it is what the R4
+session sits a blind user in front of.
+
 **This vocabulary is provisional** and the release ledger says so (R4). It was designed by
 people who can see, and whether *long short* and *long short short* are distinguishable in a
 moving bus is a question for the hands that will use it.
