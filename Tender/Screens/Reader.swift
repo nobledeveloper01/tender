@@ -113,6 +113,18 @@ final class Reader {
         haptics.play(HapticPattern.pulses(for: value), intensity: 1.0)
     }
 
+    /// The quiz: the pattern alone, so the value is not given away.
+    func pulseOnly(_ value: Naira) {
+        haptics.play(HapticPattern.pulses(for: value), intensity: 1.0)
+    }
+
+    /// A sentence that is not an answer: the hint, the quiz's result, the
+    /// privacy promise. It is the last thing said, so a tap repeats it.
+    func say(_ text: String) {
+        lastSaid = text
+        announcer.say(text)
+    }
+
     func startTally() {
         mode = .tally(Tally())
         lastSaid = Strings.tallyStarted

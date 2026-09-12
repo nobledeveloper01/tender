@@ -16,6 +16,12 @@ final class ReaderTests: XCTestCase {
         var played: [([Pulse], Double)] = []
         func say(_ text: String) { said.append(text) }
         func play(_ pulses: [Pulse], intensity: Double) { played.append((pulses, intensity)) }
+
+        static func blank() -> Frame {
+            var pb: CVPixelBuffer?
+            CVPixelBufferCreate(nil, 64, 48, kCVPixelFormatType_32BGRA, nil, &pb)
+            return Frame(pixels: pb!)
+        }
     }
 
     /// Emits the same frame `count` times, `gap` apart, then ends.

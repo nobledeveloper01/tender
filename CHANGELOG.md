@@ -10,6 +10,15 @@ Entries say *why*, not just what.
 
 ### Added
 
+- **Nineteen of twenty features**, each checked against the product's five
+  rules before it was built — [ADR-0004](docs/adr/0004-twenty-things-and-the-rule-they-passed.md),
+  and the table in [`docs/FEATURE-BACKLOG.md`](docs/FEATURE-BACKLOG.md).
+  A sure answer now needs two frames that agree; *"Closer."*; the torch in
+  the dark and *"Try near a window."*; audible patterns; hide the number and
+  dim the screen; haptic strength and speech rate; *How sure?*; the last
+  answer again on return; a first-launch hint; a quiz; a tally; a change
+  checker; face-down pause; Low Power Mode; Siri and the Action button; the
+  privacy promise, spoken. Settings grouped into three short screens.
 - **The app builds and tests from the command line on a simulator**, which is
   Phase 0's exit gate. A hand-written Xcode project with synchronized folders,
   because no project generator is installed and nothing gets installed without
@@ -85,6 +94,9 @@ Entries say *why*, not just what.
   when the problem was the light. Found by the dark fixture.
 
 ### Fixed
+
+- Two `.sheet` modifiers on the camera screen meant the change checker
+  never opened; one sheet, driven by an enum.
 
 - The ₦1000 numeral printed as *1,000* — a locale separator from string
   interpolation — on the one value that got one. Plain digits everywhere.

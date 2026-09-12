@@ -37,7 +37,7 @@ final class Phase4Tests: XCTestCase {
         try audit(app)
         // And the settings sheet, and the learn screen behind it.
         app.buttons["Settings"].tap()
-        XCTAssertTrue(app.switches.firstMatch.waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Learn the patterns"].firstMatch.waitForExistence(timeout: 3))
         try audit(app)
         app.buttons["Learn the patterns"].firstMatch.tap()
         XCTAssertTrue(app.buttons["five naira, short"].waitForExistence(timeout: 3))

@@ -23,6 +23,14 @@ final class CameraSession: NSObject, FrameSource, AVCaptureVideoDataOutputSample
            session.canAddInput(input) {
             session.addInput(input)
         }
+        // Low Power Mode: fifteen frames a second instead of thirty. The
+        // judge does not need more, and a market day is long.
+        if ProcessInfo.processInfo.isLowPowerModeEnabled,
+           let device = (session.inputs.first as? AVCaptureDeviceInput)?.device,
+           (try? device.lockForConfiguration()) != nil {
+            device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 15)
+            device.unlockForConfiguration()
+        }
         output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
         output.alwaysDiscardsLateVideoFrames = true
         output.setSampleBufferDelegate(self, queue: queue)

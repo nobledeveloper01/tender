@@ -315,3 +315,33 @@ screen designed for a reader who squints. Plain `String(int)` now, on the
 learn screen and on the camera screen's numeral, where it would have
 mattered more. A UI test asserts *₦1000*. Fourth defect today caught by a
 screenshot and no test.
+
+## 2026-09-12 — Twenty things
+
+Asked to make the product special with twenty more things. The answer was
+not to refuse and not to add twenty features; it was to check each against
+the five rules the product already has and build the ones that passed. All
+twenty did. ADR-0004 records the rule; the backlog records the list.
+
+Nineteen are in. Seven are domain rules with property tests before a screen
+existed — agreement across frames, *closer*, the light policy, how sure, a
+tally, a change checker, and numbers as words. The rest are wiring and
+screens, each under the audit at two text sizes.
+
+### What surprised us
+
+**Two `.sheet` modifiers on one view, and SwiftUI honours one.** The change
+checker never opened. Found by the UI test that tried to open it; would
+otherwise have been found by the first user who asked for it.
+
+**The audit reports a half-visible row as "partially scalable".** Twelve
+64 pt rows on one sheet, two of them straddling the bottom edge, and the
+audit measured them clipped. The fix was better design anyway: three
+sub-screens, seven rows, no fold, and a blind user is never twelve swipes
+from a setting.
+
+**A lazy list's unlaid rows have a zero frame**, and the audit calls them
+unscalable. Audit before scrolling, not after.
+
+**The picker's value text does not follow Dynamic Type**, in either style.
+An owned row of plain text does.
