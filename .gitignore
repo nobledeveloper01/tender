@@ -1,0 +1,35 @@
+# Internal working documents stay local. Only the product statement is tracked.
+docs/*
+!docs/00-PRODUCT-STATEMENT.md
+!docs/ROADMAP.md
+!docs/JOURNAL.md
+!docs/FEATURE-BACKLOG.md
+!docs/RELEASE-GATES.md
+!docs/adr/
+!docs/screenshots/
+# The mark the README shows above the title. Drawn by `scripts/brandmark.py`.
+!docs/mark.png
+
+# The dataset is photographs of banknotes and lives beside the repo, not in
+# it. `make dataset-check` reads it from DATASET, which defaults to ../tender-dataset.
+dataset/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.log
+
+# Xcode / Swift
+**/xcuserdata/
+**/*.xcuserdatad/
+**/DerivedData/
+**/.build/
+**/.swiftpm/
+**/*.xcresult
+**/coverage/
+*.mlmodelc/
+# The trained model is an artefact of `make model`, reproduced from the
+# dataset; the placeholder that recognises nothing is code and is tracked.
+Tender/Classifier/Tender.mlmodel
+Tender/Classifier/Tender.mlpackage/
