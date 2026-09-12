@@ -95,15 +95,24 @@ interruption — so it lands over whatever VoiceOver was reading, and is repeate
 When VoiceOver is off, the same strings go through `AVSpeechSynthesizer`, because a sighted
 user with a new ₦200 also benefits from being told.
 
-**Framing** — one of five, said as the frame changes and not more than once a second:
+**Framing** — one of six, said as the frame changes and not more than once a second:
 
 | | Said | Felt |
 |---|---|---|
 | Too dark | *"Too dark."* | one long, soft |
 | Too bright | *"Too bright."* | one long, soft |
 | Nothing | *"I can't see a note."* | nothing |
+| Closer | *"Closer."* | one short, soft |
 | Steady | *"Hold steady."* | two short, soft |
 | Ready | *(the answer follows)* | — |
+
+**In the dark, the app acts before it advises.** Half a second of *too dark* and the torch
+comes on — a blind user does not know it is dark. Three seconds more and it says *"Try near
+a window."*, once. The rule is frames, not seconds, and lives in the domain.
+
+**A sure answer needs two frames that agree.** One frame can be a fold, a glare, a thumb.
+The gate's first *sure* is said as *"I think … Check."*; the second, agreeing, as the plain
+value. This only ever lowers confidence, never raises it.
 
 **The answer** — one of three, decided by two numbers ([the confidence gate](docs/ROADMAP.md#phase-3--the-camera)):
 
@@ -120,6 +129,14 @@ user about it. The old design is just *"five hundred naira"*.
 **No sentence anywhere says or implies whether a note is genuine.** `make copy-check`
 reads every string and fails on *genuine, real, fake, counterfeit, authentic, verified*.
 [ADR-0003](docs/adr/0003-the-app-names-the-denomination-not-the-authenticity.md).
+
+**On request** — VoiceOver actions on the camera screen, and Voice Control names:
+
+| Action | Says |
+|---|---|
+| *How sure?* | The two numbers in words — *"Very sure. Nothing else came close."* — about the reading, never the note |
+| *Start a tally* / *Stop the tally* | Each note is added and the total spoken: *"Three notes. One thousand two hundred naira so far."* |
+| *Check change* | After paid and cost are entered: *"Six hundred and fifty naira is due."*, then per note what is still to come |
 
 ## What the app does with the haptic engine
 
@@ -151,6 +168,13 @@ session sits a blind user in front of.
 **This vocabulary is provisional** and the release ledger says so (R4). It was designed by
 people who can see, and whether *long short* and *long short short* are distinguishable in a
 moving bus is a question for the hands that will use it.
+
+**The same patterns, as sound.** With *Sounds* on, every pattern is also a tone — a short
+is an 80 ms tick, a long a 220 ms note, synthesised, no assets — for earphones in a bag and
+hands that cannot feel a phone through a coat. Off by default when VoiceOver is on, because
+VoiceOver is already talking.
+
+**Haptic strength** is a setting: half, normal, strong. Thick pockets, thin phones.
 
 The hedged answer plays its pattern at half intensity. *I don't recognise this* plays a
 single soft long — the same as *too dark*, deliberately: both mean *the app has nothing for

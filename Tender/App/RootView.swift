@@ -51,7 +51,8 @@ enum Wiring {
             source: source,
             classifier: UntrainedClassifier(),   // R3 replaces this. It recognises nothing, on purpose.
             announcer: Announcer(),
-            haptics: Haptics()
+            haptics: Channels([Haptics(), Earcons()]),
+            torch: access == .allowed ? Torch() : NoTorch()
         )
     }
 

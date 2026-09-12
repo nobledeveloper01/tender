@@ -102,7 +102,7 @@ struct CameraScreen: View {
     private func framing(_ palette: Palette) -> some View {
         if reader.verdict == nil, let text = Announcement.text(for: reader.framing) {
             let colour: Color = switch reader.framing {
-            case .steady: palette.caution
+            case .steady, .closer: palette.caution
             case .nothing, .tooDark, .tooBright: palette.stop
             case .ready: palette.ready
             }

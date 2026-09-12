@@ -135,7 +135,7 @@ final class ReaderTests: XCTestCase {
         XCTAssertEqual(spy.said, ["I can't see a note.", "Too dark.", "I can't see a note."])
     }
 
-    func testAReadyFrameIsClassifiedOnceAndTheVerdictSpokenOnceAndFelt() async {
+    func testAReadyFrameIsClassifiedUntilTwoAgreeAndTheVerdictSpokenOnceAndFelt() async {
         let spy = Spy(), calls = Counter()
         let reader = Reader(source: ScriptedSource(frame: readyFrame(), count: 20, gap: .milliseconds(20)),
                             classifier: ScriptedClassifier(answer: [.n500: 0.97, .n1000: 0.03], delay: .zero, calls: calls),
@@ -144,7 +144,9 @@ final class ReaderTests: XCTestCase {
         await settle(1.0)
         reader.stop()
         XCTAssertEqual(reader.verdict, .sure(.n500))
-        XCTAssertEqual(calls.value, 1, "twenty ready frames after an answer; the classifier runs once")
+        // Two: the first "sure" is held until a second frame agrees (ADR-0004),
+        // then the answer sticks and the remaining frames are not classified.
+        XCTAssertEqual(calls.value, 2, "twenty ready frames; two classifications, then the answer sticks")
         XCTAssertEqual(spy.said.filter { $0 == "five hundred naira." }.count, 1)
         XCTAssertEqual(spy.played.last?.0, HapticPattern.pulses(for: .n500))
         XCTAssertEqual(spy.played.last?.1, 1.0)

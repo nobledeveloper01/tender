@@ -40,6 +40,7 @@ public enum HapticPattern {
     public static func render(_ framing: Framing) -> (pulses: [Pulse], intensity: Double)? {
         switch framing {
         case .tooDark, .tooBright: ([.long], 0.4)
+        case .closer: ([.short], 0.4)
         case .steady: ([.short, .short], 0.4)
         case .nothing, .ready: nil
         }

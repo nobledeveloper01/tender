@@ -35,7 +35,7 @@ final class Announcer: Speaking {
         } else if speakWhenVoiceOverOff {
             synthesiser.stopSpeaking(at: .immediate)
             let utterance = AVSpeechUtterance(string: text)
-            utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            utterance.rate = Preferences.speechRate()
             synthesiser.speak(utterance)
         }
     }

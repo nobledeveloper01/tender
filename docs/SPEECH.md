@@ -36,6 +36,7 @@ what a native speaker is asked to record — eight values, one suffix, and three
 - I can't see a note.
 - Too dark.
 - Too bright.
+- Closer.
 - Hold steady.
 
-**8 values, 1 suffix, 3 frames, 4 camera prompts.**
+**8 values, 1 suffix, 3 frames, 5 camera prompts.**

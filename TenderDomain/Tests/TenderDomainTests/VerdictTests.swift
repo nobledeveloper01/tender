@@ -85,7 +85,8 @@ struct FramingTests {
 
     @Test("Boundaries are inclusive on the safe side")
     func boundaries() {
-        #expect(FramingRule.judge(coverage: FramingRule.leastCoverage, luminance: 0.5, clipped: 0, detail: 1) == .ready)
+        #expect(FramingRule.judge(coverage: FramingRule.leastCoverage, luminance: 0.5, clipped: 0, detail: 1) == .closer)
+        #expect(FramingRule.judge(coverage: FramingRule.nearEnough, luminance: 0.5, clipped: 0, detail: 1) == .ready)
         #expect(FramingRule.judge(coverage: 0.5, luminance: FramingRule.darkest, clipped: 0, detail: 1) == .ready)
         #expect(FramingRule.judge(coverage: 0.5, luminance: FramingRule.brightest, clipped: 0, detail: 1) == .ready)
         #expect(FramingRule.judge(coverage: 0.5, luminance: 0.5, clipped: 0, detail: FramingRule.leastDetail) == .ready)

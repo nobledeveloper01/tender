@@ -11,6 +11,7 @@ public enum Framing: Sendable, Equatable, CaseIterable {
     case nothing      // no note-coloured region large enough to be a note
     case tooDark
     case tooBright
+    case closer       // a note, but small in the frame: bring it nearer
     case steady       // a note, but blurred: the hand is moving
     case ready
 }
@@ -18,6 +19,8 @@ public enum Framing: Sendable, Equatable, CaseIterable {
 public enum FramingRule {
     /// Fraction of the frame that must be note-like before it is a note at all.
     public static let leastCoverage = 0.15
+    /// Below this it is a note, but a small one: "closer".
+    public static let nearEnough = 0.30
     /// Mean luminance, 0…1, below which the frame is too dark.
     public static let darkest = 0.18
     /// Mean luminance above which it is too bright.
@@ -39,6 +42,7 @@ public enum FramingRule {
         if luminance < darkest { return .tooDark }
         if coverage < leastCoverage { return .nothing }
         if luminance > brightest || clipped > mostClipped { return .tooBright }
+        if coverage < nearEnough { return .closer }
         if detail < leastDetail { return .steady }
         return .ready
     }

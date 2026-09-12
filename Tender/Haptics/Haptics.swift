@@ -28,7 +28,10 @@ final class Haptics: Pulsing {
         guard enabled, let engine else { return }
         var events: [CHHapticEvent] = []
         var t: TimeInterval = 0
-        let strength = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(intensity))
+        // The setting scales every pulse: half for a hand on the phone,
+        // strong for a phone in a coat.
+        let scaled = min(1.0, intensity * Preferences.hapticStrength())
+        let strength = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(scaled))
         for pulse in pulses {
             switch pulse {
             case .short:

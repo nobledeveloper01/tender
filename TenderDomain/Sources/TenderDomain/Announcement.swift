@@ -10,6 +10,7 @@ public enum Announcement {
         case .nothing: "I can't see a note."
         case .tooDark: "Too dark."
         case .tooBright: "Too bright."
+        case .closer: "Closer."
         case .steady: "Hold steady."
         case .ready: nil   // ready is not a word; the answer follows
         }
