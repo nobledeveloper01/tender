@@ -11,6 +11,10 @@ docs/*
 !docs/mark.png
 # What the photographer is handed. Required by doc-check, and required to be tracked.
 !docs/DATASET-GUIDE.md
+# The store listing, so copy-check can read it and a reader can find it.
+!docs/APPSTORE.md
+# Everything the app says, derived from the source. What a speaker is handed in v1.1.
+!docs/SPEECH.md
 
 # The dataset is photographs of banknotes and lives beside the repo, not in
 # it. `make dataset-check` reads it from DATASET, which defaults to ../tender-dataset.

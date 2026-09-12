@@ -11,7 +11,12 @@ import UIKit
 struct SplashView: View {
     let onSwept: @MainActor () -> Void
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    /// The system setting, or `-reduceMotion` on the command line, which the
+    /// UI tests use because the setting itself cannot be flipped from a test.
+    private var reduceMotion: Bool {
+        systemReduceMotion || CommandLine.arguments.contains("-reduceMotion")
+    }
     @Environment(\.colorScheme) private var scheme
     @State private var grown = false
     @State private var bloomed = false

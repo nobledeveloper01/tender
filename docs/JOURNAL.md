@@ -144,3 +144,31 @@ the FRD corrected to match.
 **The synthetic model was 75.8% accurate and the gate refused it**, which is
 the right outcome twice: the pipeline runs end to end, and the number it
 produced on coloured squares means nothing, and `model-check` said so.
+
+## 2026-09-12 — Phase 4 groundwork on the simulator, and the store text
+
+What a simulator can prove of Phase 4, proved: the largest accessibility text
+size clips nothing on either screen, with the audit's own clipped-text check
+over the longest sentence the app shows; the splash sweeps with Reduce Motion
+on, because a timer ends it and not an animation — the thing Grid recorded in
+its own ADR about the splash, now asserted here; and a tap repeats without changing anything.
+
+The App Store text, written and gated. And `docs/SPEECH.md` — everything the
+app says, derived from the two source files that say it, with a gate that
+fails when the tracked copy is stale. It is what a native speaker is handed
+in v1.1: eight values, one suffix, three frames, four camera prompts.
+
+### What surprised us
+
+**The toolbar capped Dynamic Type.** The settings sheet's *Done* was a toolbar
+item, and the audit reported it "partially unsupported" at the largest size —
+toolbar items are sized by the bar. It is a 64 pt list row now, which the
+design rule wanted anyway.
+
+**The copy gate caught its own author.** The first draft of the store text
+opened with a sentence explaining which word the app never uses, using the
+word. The gate does not read intent, which is the point of a gate.
+
+**The gear did not grow.** A symbol with a fixed point size, on a screen where
+everything else had scaled to three times its size. The audit did not flag it
+— it is an image — but a screenshot did. A text style now.

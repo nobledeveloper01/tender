@@ -11,6 +11,7 @@ enum Strings {
     static let repeatAction = "Repeat"
     static let startOver = "Start over"
     static let settings = "Settings"
+    static let done = "Done"
     static let speechWhenVoiceOverOff = "Speak when VoiceOver is off"
     static let haptics = "Haptics"
     static let cameraScreenLabel = "Camera. Point at a note. Tap to repeat. Two-finger double-tap to start over."

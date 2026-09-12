@@ -41,9 +41,18 @@ Entries say *why*, not just what.
 - **A fixture source**, so the simulator can push a photograph through the
   whole pipeline, and three UI tests that walk it end to end.
 
+- **Phase 4 groundwork a simulator can prove**: the largest accessibility
+  text size without a clipped word on either screen, the splash sweeping with
+  Reduce Motion on, a tap that repeats and changes nothing.
+- The App Store text, in `docs/APPSTORE.md`, read by `copy-check`.
+- `docs/SPEECH.md` — everything the app says, derived from the source, gated by
+  `make speech-check`. What a native speaker is handed in v1.1.
+
 ### Changed
 
 - **Phase 0 cleared; `PHASE` is 1.**
+- Settings' *Done* is a 64 pt row, not a toolbar item — toolbar items are sized
+  by the bar and stopped scaling at the largest text size.
 - The judge decides *too dark* before *nothing*: in the dark, coverage means
   nothing, and *"I can't see a note"* sent a blind user checking their grip
   when the problem was the light. Found by the dark fixture.

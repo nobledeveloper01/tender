@@ -40,7 +40,7 @@ struct CameraScreen: View {
                 showSettings = true
             } label: {
                 Image(systemName: "gearshape")
-                    .font(.system(size: 26, weight: .semibold))
+                    .font(.title2.weight(.semibold))   // a text style, so it scales with the rest
                     .foregroundStyle(palette.textSecondary)
                     .frame(width: Target.standard, height: Target.standard)
             }
@@ -115,18 +115,19 @@ struct SettingsSheet: View {
 
     var body: some View {
         NavigationStack {
+            // Three rows, each 64 pt. Done is a row rather than a toolbar item
+            // because toolbar items are sized by the bar, which caps them at
+            // the largest text sizes — the audit found it — and below 64.
             List {
                 Toggle(Strings.speechWhenVoiceOverOff, isOn: $speechEnabled)
                     .frame(minHeight: Target.standard)
                 Toggle(Strings.haptics, isOn: $hapticsEnabled)
                     .frame(minHeight: Target.standard)
+                Button(Strings.done) { dismiss() }
+                    .frame(maxWidth: .infinity, minHeight: Target.standard)
             }
             .font(Type.bodyFont())
             .navigationTitle(Strings.settings)
-            .toolbar {
-                Button("Done") { dismiss() }
-                    .frame(minWidth: Target.standard, minHeight: Target.standard)
-            }
         }
     }
 }
