@@ -17,6 +17,18 @@ struct CameraScreen: View {
         ZStack {
             LinearGradient(colors: palette.canvas, startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
+            // The preview, dimmed 40% so the numeral reads over it and a
+            // low-vision user gains aim without losing contrast. Only when
+            // there is a live session; the simulator shows the canvas.
+            if let session = reader.captureSession {
+                CameraPreview(session: session)
+                    .ignoresSafeArea()
+                    .opacity(0.6)
+                    .accessibilityHidden(true)
+            }
+            ShakeDetector { reader.startOver() }
+                .frame(width: 0, height: 0)
+                .accessibilityHidden(true)
             VStack(spacing: Gap.l) {
                 Spacer()
                 answer(palette)

@@ -45,6 +45,10 @@ Entries say *why*, not just what.
   text size without a clipped word on either screen, the splash sweeping with
   Reduce Motion on, a tap that repeats and changes nothing.
 - The App Store text, in `docs/APPSTORE.md`, read by `copy-check`.
+- **The camera preview**, dimmed behind the numeral; **the permission-denied
+  state** — one sentence, one 64 pt button to Settings, spoken on appearance,
+  and never dressed as *"I can't see a note"*; and **shake to start over**.
+  Three things the FRD required and the app did not do.
 - `docs/SPEECH.md` — everything the app says, derived from the source, gated by
   `make speech-check`. What a native speaker is handed in v1.1.
 

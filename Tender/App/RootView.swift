@@ -4,11 +4,15 @@ import SwiftUI
 
 struct RootView: View {
     @State private var swept = false
+    @State private var access: CameraAccess?
     @State private var reader: Reader?
 
     var body: some View {
         ZStack {
-            if let reader, swept {
+            if swept, access == .denied {
+                CameraDeniedView()
+                    .transition(.opacity)
+            } else if let reader, swept, access != nil {
                 CameraScreen(reader: reader)
                     .transition(.opacity)
             } else {
@@ -16,7 +20,13 @@ struct RootView: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: swept)
-        .task { if reader == nil { reader = Wiring.reader() } }
+        .task {
+            // The permission prompt, if any, comes up over the splash; the
+            // session is built once the answer is known.
+            let a = await CameraAccess.current()
+            access = a
+            if reader == nil { reader = Wiring.reader(access: a) }
+        }
     }
 }
 
@@ -24,7 +34,7 @@ struct RootView: View {
 /// the whole app to find out which classifier is running.
 @MainActor
 enum Wiring {
-    static func reader() -> Reader {
+    static func reader(access: CameraAccess) -> Reader {
         // `-fixture <name>` feeds a photograph instead of the camera: the UI
         // tests and the simulator use it. A launch argument cannot be set on
         // an installed app by its user, so this is not a path a farmer's
@@ -32,8 +42,10 @@ enum Wiring {
         let source: FrameSource
         if let name = fixtureArgument(), let fixture = FixtureSource(named: name) {
             source = fixture
+        } else if access == .allowed {
+            source = CameraSession()
         } else {
-            source = CameraSession.isAvailable ? CameraSession() : NoCameraSource()
+            source = NoCameraSource()
         }
         return Reader(
             source: source,

@@ -172,3 +172,25 @@ word. The gate does not read intent, which is the point of a gate.
 **The gear did not grow.** A symbol with a fixed point size, on a screen where
 everything else had scaled to three times its size. The audit did not flag it
 — it is an image — but a screenshot did. A text style now.
+
+## 2026-09-12 — Three things the FRD required and the app did not do
+
+Read the camera screen against `02-FRD.md` and found three gaps. No preview
+— DESIGN.md's dimmed 40% behind the numeral, the low-vision user's way to
+aim. No permission-denied state — a refused camera produced no frames, so
+the app said *"I can't see a note"* forever, the silent dead end CLAUDE.md
+forbids, and dressed as an empty scene. No shake to start over.
+
+All three built. The denied state is one sentence and one 64 pt button that
+opens Settings, spoken the moment it appears, with a launch-argument hook so
+a UI test can see it — the permission dialog itself cannot be driven from a
+test — and the test asserts it never masquerades as *"I can't see a note"*.
+
+### What surprised us
+
+**"Not allowed to look" and "nothing to see" had the same sentence.** A
+blind user told *"I can't see a note"* with the camera refused would have
+tried better light, a flatter hand, a different note, and never the one thing
+that would help. The FRD had the requirement from the start; the code did
+not, and nothing on the simulator would ever have shown it, because the
+simulator has no camera to refuse.

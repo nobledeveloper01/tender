@@ -3,6 +3,7 @@
 //
 // Everything that decides is the domain's. This object is the wiring: it
 // measures, asks, and then speaks and pulses what it is told.
+import AVFoundation
 import CoreVideo
 import Observation
 import TenderDomain
@@ -25,6 +26,9 @@ final class Reader {
 
     /// How long a classification may take before it is abandoned.
     static let budget: Duration = .milliseconds(1500)
+
+    /// The live session, for the dimmed preview. Nil for fixtures and the simulator.
+    var captureSession: AVCaptureSession? { (source as? CameraSession)?.captureSession }
 
     init(source: FrameSource, classifier: NoteClassifier, announcer: Announcer, haptics: Haptics) {
         self.source = source
