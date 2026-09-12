@@ -64,6 +64,11 @@ Foundation, and tests in seconds with no simulator. `make coverage-gate` holds i
   <img src="docs/screenshots/07-learn.png" width="230" alt="Learn the patterns: eight values, each with its haptic pattern in words and as a glyph; tapping one says it and pulses it" />
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/09-settings.png" width="230" alt="Settings: seven rows in three groups — Learn, Quiz; Speech, Haptics and sounds, Screen; What Tender knows about you, Done" />
+  <img src="docs/screenshots/08-change.png" width="230" alt="Check change: Paid and Cost, then the camera reads each note and says what is still to come" />
+</p>
+
 **Nothing requires sight, and the simulator can prove part of that.** Every screen passes
 Xcode's accessibility audit — every check but contrast, which the audit cannot read over a
 gradient and `ContrastTests` measures at 7:1 instead — at the default text size and at the
