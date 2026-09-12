@@ -9,8 +9,15 @@ SCHEME  := Tender
 DERIVED := .build/DerivedData
 DATASET ?= $(abspath ../tender-dataset)
 
-# The simulator to test on. `xcrun simctl list devices available` to pick.
-SIM ?= $(shell xcrun simctl list devices available 2>/dev/null | grep -m1 iPhone | grep -oE '[0-9A-F-]{36}')
+# The simulator to test on. A device named "Tender Tests" if one exists, so
+# the tests never drive the simulator a person is looking at — the UI tests
+# relaunch the app at the largest text size, and watching that happen on
+# your own screen is alarming. Otherwise the first iPhone, which is what CI
+# has. `xcrun simctl create "Tender Tests" "iPhone 17" <runtime>` to make one.
+SIM ?= $(shell xcrun simctl list devices available 2>/dev/null | grep -m1 'Tender Tests' | grep -oE '[0-9A-F-]{36}')
+ifeq ($(SIM),)
+SIM := $(shell xcrun simctl list devices available 2>/dev/null | grep -m1 iPhone | grep -oE '[0-9A-F-]{36}')
+endif
 DEST := platform=iOS Simulator,id=$(SIM)
 
 .DEFAULT_GOAL := help
