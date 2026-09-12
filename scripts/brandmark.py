@@ -23,10 +23,15 @@ except ImportError:  # pragma: no cover
     print("Pillow is needed: python3 -m pip install --user Pillow", file=sys.stderr)
     sys.exit(2)
 
+import os
+
 ROOT = Path(__file__).resolve().parent.parent
 PALETTE = ROOT / "Tender" / "Design" / "Palette.swift"
-ICON = ROOT / "Tender" / "Assets.xcassets" / "AppIcon.appiconset" / "icon-1024.png"
-MARK = ROOT / "docs" / "mark.png"
+# `splash-check` redraws into a temporary directory to compare, so the
+# outputs can be redirected without touching the tree.
+_OUT = Path(os.environ["TENDER_BRANDMARK_OUT"]) if "TENDER_BRANDMARK_OUT" in os.environ else None
+ICON = (_OUT / "icon-1024.png") if _OUT else ROOT / "Tender" / "Assets.xcassets" / "AppIcon.appiconset" / "icon-1024.png"
+MARK = (_OUT / "mark.png") if _OUT else ROOT / "docs" / "mark.png"
 
 
 def dark_palette() -> dict[str, tuple[int, int, int]]:
@@ -66,7 +71,7 @@ def main() -> int:
     draw(1024, ground, ink).convert("RGB").save(ICON)      # App Store icons carry no alpha
     MARK.parent.mkdir(parents=True, exist_ok=True)
     draw(256, None, ink).save(MARK)
-    print(f"\033[0;32m✓\033[0m drew the mark: {ICON.relative_to(ROOT)} and {MARK.relative_to(ROOT)}")
+    print(f"\033[0;32m✓\033[0m drew the mark: {ICON} and {MARK}" if _OUT else f"\033[0;32m✓\033[0m drew the mark: {ICON.relative_to(ROOT)} and {MARK.relative_to(ROOT)}")
     return 0
 
 

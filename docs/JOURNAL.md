@@ -42,3 +42,42 @@ Harvest, which allows a short list of `dart:` libraries. It is affordable
 because the domain is small and numeric, and it is worth having because the
 temptation in Swift is Foundation by name — `Date`, `String(format:)` — and
 "no imports" is a rule a gate can read without a parser.
+
+## 2026-09-12 — Built, and the audit found two defects before anyone looked
+
+The scaffold: the domain package, the app, a hand-written Xcode project, the
+gates ported to Swift, and CI. The domain tested in two milliseconds before
+the app existed. The app built on the second attempt — four Swift 6 strict-
+concurrency errors in one file, all real, none downgraded to warnings.
+
+### What surprised us
+
+**The accessibility audit failed on the first run, on real defects.** Two.
+`Font.system(size:)` does not scale with Dynamic Type — the sizes were fixed,
+so a low-vision user who set the largest text would have got 17 pt, on the one
+product whose design floor is that user. And the audit said the framing text
+failed contrast. Both were the gate working on the first screen it ever saw.
+
+**The second one was the audit's defect, not ours.** Text at 15:1 against
+every stop of the page gradient, reported as a contrast failure. Found by
+experiment, not theory: the same text over a flat colour passed; over the
+gradient, failed. The audit reads a view's *declared* background colour, not
+its pixels, and a gradient has no single colour to read. So the audit runs
+every check but contrast, and contrast is gated by `ContrastTests`, which
+measures every stop at 7:1 — more than the audit asks for. The one check
+handed to a stronger test rather than dropped, and DESIGN.md says so.
+
+**`xcodebuild test -quiet` says nothing on success.** A green `make ci` with
+no evidence in the log that the app suite ran is exactly the green this
+portfolio distrusts. `test-app` now reads the result bundle, prints the count,
+and refuses a run that executed zero tests.
+
+**A hand-written `project.pbxproj` is about 400 lines with Xcode 26's
+synchronized folders**, and it worked. No xcodegen on the machine, nothing
+installed without asking. The file is small enough to own.
+
+**Every gate was broken on purpose and every one fired** — nine, including
+coverage, which went to 39% with the verdict tests removed. The break-test
+found one cosmetic defect: `domain-purity` printed the raw regex instead of
+the name. Fixed. A gate nobody has watched fail is a gate nobody knows the
+configuration of.
