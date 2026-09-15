@@ -375,3 +375,13 @@ them.
 **The coverage gate pointed at four files** and every gap was a real one —
 six language names nobody had asserted, the million and the minus in
 numbers-as-words, an agreement edge, the ordering of values. 99.2% now.
+
+## 2026-09-15 — the README in Grid's shape
+
+The README is Grid's twelve sections now, at the user's ask, across the
+portfolio. The counts gate held two phrases to a single line each — a
+figure and the words around it cannot wrap, or the regex reads the sentence
+as gone — which is a property of the gate worth knowing before the next
+rewrite. The repository had no licence file; it has the portfolio's pair —
+BSL for the app, Apache-2.0 for `TenderDomain` — with the grant written for
+assistive use.
